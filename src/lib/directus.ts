@@ -40,6 +40,8 @@ export type HeadlessPost = {
   user_updated: string | null;
   date_created: string;
   date_updated: string | null;
+  // hide_post?: boolean;
+  // related_post?: string;
 }
 
 type PostStatus = 'draft' | 'published' | 'archived';

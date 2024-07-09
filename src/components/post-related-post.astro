@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+type Props = {
+	post: CollectionEntry<"blog">;
+};
+
+const { post } = Astro.props;
+---
+
+{
+  post.data.relatedPost ? (
+  <div class="mx-auto max-w-3xl py-8 mt-8 lg:mt-16 border-t">
+    <p><a class="font-bold text-blue-800 text-xl" href={`/blog${post.data.relatedPost}`}>View the related post</a>.</p>
+  </div>
+  ) : undefined
+}

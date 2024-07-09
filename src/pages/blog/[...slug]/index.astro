@@ -3,6 +3,7 @@ import type { CollectionEntry } from 'astro:content';
 import Layout from '../../../layouts/layout.astro';
 import Container from '../../../components/page-container.astro';
 import { getMergedPosts } from '../../../services/post.service';
+import PostRelatedPost from '../../../components/post-related-post.astro';
 import PostFooter from '../../../components/post-footer.astro';
 import PostHeader from '../../../components/post-header.astro';
 import PostBody from '../../../components/post-body.astro';
@@ -10,7 +11,7 @@ import PostCta from '../../../components/post-cta.astro';
 import '../styles.scss';
 
 export async function getStaticPaths() {
-	const mergedPosts = await getMergedPosts();
+	const mergedPosts = await getMergedPosts(true);
 	return mergedPosts.map((post) => ({
 		params: { slug: post.slug },
 		props: post,
@@ -20,6 +21,8 @@ export async function getStaticPaths() {
 type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
+
+// get related post
 
 
 // @todo - add reading time to posts?
@@ -33,6 +36,7 @@ const post = Astro.props;
     <article>
       <PostHeader post={post} />
       <PostBody post={post} />
+      <PostRelatedPost post={post} />
       <PostFooter post={post} />
     </article>
     <PostCta></PostCta>

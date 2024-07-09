@@ -3,9 +3,15 @@ import { HEADLESS_STUB } from '../consts';
 import { readItems } from "@directus/sdk";
 import directus, { type HeadlessPost } from '../lib/directus';
 
-export async function getMergedPosts() {
+export async function getMergedPosts(includeHiddenPosts = false) {
   const internalCollection = await getCollection("blog");
-  
+  // support for internal posts to be hidden in the feed
+  const internalCollectionFiltered = internalCollection.filter((p) => {
+    if (includeHiddenPosts) {
+      return true;
+    }
+    return p.data.hidePost !== true;
+  });
   let directusCollection: CollectionEntry<'blog'>[] = [];
   // Local dev: If Directus CMS is down, comment out the below try->catch to bypass the external post content!
   try {
@@ -15,7 +21,8 @@ export async function getMergedPosts() {
     throw new Error('Headless CMS is not responding...is Directus down?');
   }
 
-  return [...directusCollection, ...internalCollection]
+
+  return [...directusCollection, ...internalCollectionFiltered]
   .filter((b) => b.data.draft !== true)
   .sort((a, b) => {
     return b.data.publishDate.valueOf() > a.data.publishDate.valueOf() ? 1 : -1;
