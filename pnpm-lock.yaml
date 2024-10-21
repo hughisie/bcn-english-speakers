@@ -16,13 +16,13 @@ importers:
         version: 0.3.1(typescript@5.2.2)
       '@astrojs/markdown-remark':
         specifier: ^4.0.0
-        version: 4.0.0(astro@3.5.5)
+        version: 4.0.0(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))
       '@astrojs/mdx':
         specifier: ^1.1.5
-        version: 1.1.5(astro@3.5.5)
+        version: 1.1.5(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))
       '@astrojs/preact':
         specifier: ^3.3.0
-        version: 3.3.0(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0)
+        version: 3.3.0(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3))
       '@astrojs/rss':
         specifier: ^3.0.0
         version: 3.0.0
@@ -31,13 +31,16 @@ importers:
         version: 3.0.3
       '@astrojs/tailwind':
         specifier: ^5.0.2
-        version: 5.0.2(astro@3.5.5)(tailwindcss@3.3.5)
+        version: 5.0.2(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))(tailwindcss@3.3.5)
       '@directus/sdk':
         specifier: ^16.0.1
         version: 16.0.1
       '@fontsource-variable/inter':
         specifier: ^5.0.15
         version: 5.0.15
+      '@preact/signals':
+        specifier: ^1.3.0
+        version: 1.3.0(preact@10.22.0)
       '@tailwindcss/typography':
         specifier: ^0.5.10
         version: 0.5.10(tailwindcss@3.3.5)
@@ -49,7 +52,7 @@ importers:
         version: 3.13.3
       astro:
         specifier: ^3.5.5
-        version: 3.5.5(sass@1.77.3)(typescript@5.2.2)
+        version: 3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2)
       astro-navbar:
         specifier: ^2.3.0
         version: 2.3.0
@@ -641,11 +644,11 @@ packages:
       '@babel/core': 7.x
       vite: 2.x || 3.x || 4.x || 5.x
 
-  '@preact/signals-core@1.6.0':
-    resolution: {integrity: sha512-O/XGxwP85h1F7+ouqTMOIZ3+V1whfaV9ToIVcuyGriD4JkSD00cQo54BKdqjvBJxbenvp7ynfqRHEwI6e+NIhw==}
+  '@preact/signals-core@1.8.0':
+    resolution: {integrity: sha512-OBvUsRZqNmjzCZXWLxkZfhcgT+Fk8DDcT/8vD6a1xhDemodyy87UJRJfASMuSD8FaAIeGgGm85ydXhm7lr4fyA==}
 
-  '@preact/signals@1.2.3':
-    resolution: {integrity: sha512-M2DXse3Wi8HwjI1d2vQWOLJ3lHogvqTsJYvl4ofXRXgMFQzJ7kmlZvlt5i8x5S5VwgZu0ghru4HkLqOoFfU2JQ==}
+  '@preact/signals@1.3.0':
+    resolution: {integrity: sha512-EOMeg42SlLS72dhoq6Vjq08havnLseWmPQ8A0YsgIAqMgWgx7V1a39+Pxo6i7SY5NwJtH4849JogFq3M67AzWg==}
     peerDependencies:
       preact: 10.x
 
@@ -2841,10 +2844,10 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdown-remark@3.5.0(astro@3.5.5)':
+  '@astrojs/markdown-remark@3.5.0(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))':
     dependencies:
       '@astrojs/prism': 3.0.0
-      astro: 3.5.5(sass@1.77.3)(typescript@5.2.2)
+      astro: 3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2)
       github-slugger: 2.0.0
       import-meta-resolve: 3.1.1
       mdast-util-definitions: 6.0.0
@@ -2861,10 +2864,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/markdown-remark@4.0.0(astro@3.5.5)':
+  '@astrojs/markdown-remark@4.0.0(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))':
     dependencies:
       '@astrojs/prism': 3.0.0
-      astro: 3.5.5(sass@1.77.3)(typescript@5.2.2)
+      astro: 3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2)
       github-slugger: 2.0.0
       import-meta-resolve: 4.0.0
       mdast-util-definitions: 6.0.0
@@ -2881,12 +2884,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@1.1.5(astro@3.5.5)':
+  '@astrojs/mdx@1.1.5(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))':
     dependencies:
-      '@astrojs/markdown-remark': 3.5.0(astro@3.5.5)
+      '@astrojs/markdown-remark': 3.5.0(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))
       '@mdx-js/mdx': 2.3.0
       acorn: 8.11.2
-      astro: 3.5.5(sass@1.77.3)(typescript@5.2.2)
+      astro: 3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2)
       es-module-lexer: 1.4.1
       estree-util-visit: 1.2.1
       github-slugger: 2.0.0
@@ -2902,12 +2905,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/preact@3.3.0(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0)':
+  '@astrojs/preact@3.3.0(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3))':
     dependencies:
       '@babel/plugin-transform-react-jsx': 7.24.6(@babel/core@7.23.3)
       '@babel/plugin-transform-react-jsx-development': 7.24.6(@babel/core@7.23.3)
-      '@preact/preset-vite': 2.8.2(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0)
-      '@preact/signals': 1.2.3(preact@10.22.0)
+      '@preact/preset-vite': 2.8.2(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3))
+      '@preact/signals': 1.3.0(preact@10.22.0)
       babel-plugin-transform-hook-names: 1.0.2(@babel/core@7.23.3)
       preact: 10.22.0
       preact-render-to-string: 6.3.1(preact@10.22.0)
@@ -2931,9 +2934,9 @@ snapshots:
       sitemap: 7.1.1
       zod: 3.22.4
 
-  '@astrojs/tailwind@5.0.2(astro@3.5.5)(tailwindcss@3.3.5)':
+  '@astrojs/tailwind@5.0.2(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))(tailwindcss@3.3.5)':
     dependencies:
-      astro: 3.5.5(sass@1.77.3)(typescript@5.2.2)
+      astro: 3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2)
       autoprefixer: 10.4.16(postcss@8.4.31)
       postcss: 8.4.31
       postcss-load-config: 4.0.1(postcss@8.4.31)
@@ -3338,12 +3341,12 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
 
-  '@preact/preset-vite@2.8.2(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0)':
+  '@preact/preset-vite@2.8.2(@babel/core@7.23.3)(preact@10.22.0)(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3))':
     dependencies:
       '@babel/core': 7.23.3
       '@babel/plugin-transform-react-jsx': 7.24.6(@babel/core@7.23.3)
       '@babel/plugin-transform-react-jsx-development': 7.24.6(@babel/core@7.23.3)
-      '@prefresh/vite': 2.4.5(preact@10.22.0)(vite@4.5.0)
+      '@prefresh/vite': 2.4.5(preact@10.22.0)(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3))
       '@rollup/pluginutils': 4.2.1
       babel-plugin-transform-hook-names: 1.0.2(@babel/core@7.23.3)
       debug: 4.3.4
@@ -3353,16 +3356,16 @@ snapshots:
       resolve: 1.22.8
       source-map: 0.7.4
       stack-trace: 1.0.0-pre2
-      vite: 4.5.0(sass@1.77.3)
+      vite: 4.5.0(@types/node@17.0.45)(sass@1.77.3)
     transitivePeerDependencies:
       - preact
       - supports-color
 
-  '@preact/signals-core@1.6.0': {}
+  '@preact/signals-core@1.8.0': {}
 
-  '@preact/signals@1.2.3(preact@10.22.0)':
+  '@preact/signals@1.3.0(preact@10.22.0)':
     dependencies:
-      '@preact/signals-core': 1.6.0
+      '@preact/signals-core': 1.8.0
       preact: 10.22.0
 
   '@prefresh/babel-plugin@0.5.1': {}
@@ -3373,7 +3376,7 @@ snapshots:
 
   '@prefresh/utils@1.2.0': {}
 
-  '@prefresh/vite@2.4.5(preact@10.22.0)(vite@4.5.0)':
+  '@prefresh/vite@2.4.5(preact@10.22.0)(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3))':
     dependencies:
       '@babel/core': 7.23.3
       '@prefresh/babel-plugin': 0.5.1
@@ -3381,7 +3384,7 @@ snapshots:
       '@prefresh/utils': 1.2.0
       '@rollup/pluginutils': 4.2.1
       preact: 10.22.0
-      vite: 4.5.0(sass@1.77.3)
+      vite: 4.5.0(@types/node@17.0.45)(sass@1.77.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -3584,11 +3587,11 @@ snapshots:
 
   astro-seo@0.8.0: {}
 
-  astro@3.5.5(sass@1.77.3)(typescript@5.2.2):
+  astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2):
     dependencies:
       '@astrojs/compiler': 2.3.2
       '@astrojs/internal-helpers': 0.2.1
-      '@astrojs/markdown-remark': 3.5.0(astro@3.5.5)
+      '@astrojs/markdown-remark': 3.5.0(astro@3.5.5(@types/node@17.0.45)(sass@1.77.3)(typescript@5.2.2))
       '@astrojs/telemetry': 3.0.4
       '@babel/core': 7.23.3
       '@babel/generator': 7.23.3
@@ -3639,8 +3642,8 @@ snapshots:
       tsconfck: 3.0.0(typescript@5.2.2)
       unist-util-visit: 4.1.2
       vfile: 5.3.7
-      vite: 4.5.0(sass@1.77.3)
-      vitefu: 0.2.5(vite@4.5.0)
+      vite: 4.5.0(@types/node@17.0.45)(sass@1.77.3)
+      vitefu: 0.2.5(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3))
       which-pm: 2.1.1
       yargs-parser: 21.1.1
       zod: 3.22.4
@@ -5400,8 +5403,9 @@ snapshots:
   postcss-load-config@4.0.1(postcss@8.4.31):
     dependencies:
       lilconfig: 2.1.0
-      postcss: 8.4.31
       yaml: 2.3.4
+    optionalDependencies:
+      postcss: 8.4.31
 
   postcss-nested@6.0.1(postcss@8.4.31):
     dependencies:
@@ -5940,7 +5944,7 @@ snapshots:
   ts-interface-checker@0.1.13: {}
 
   tsconfck@3.0.0(typescript@5.2.2):
-    dependencies:
+    optionalDependencies:
       typescript: 5.2.2
 
   tunnel-agent@0.6.0:
@@ -6093,48 +6097,51 @@ snapshots:
       unist-util-stringify-position: 4.0.0
       vfile-message: 4.0.2
 
-  vite@4.5.0(sass@1.77.3):
+  vite@4.5.0(@types/node@17.0.45)(sass@1.77.3):
     dependencies:
       esbuild: 0.18.20
       postcss: 8.4.31
       rollup: 3.29.4
-      sass: 1.77.3
     optionalDependencies:
+      '@types/node': 17.0.45
       fsevents: 2.3.3
+      sass: 1.77.3
 
-  vitefu@0.2.5(vite@4.5.0):
-    dependencies:
-      vite: 4.5.0(sass@1.77.3)
+  vitefu@0.2.5(vite@4.5.0(@types/node@17.0.45)(sass@1.77.3)):
+    optionalDependencies:
+      vite: 4.5.0(@types/node@17.0.45)(sass@1.77.3)
 
   volar-service-css@0.0.16(@volar/language-service@1.10.10):
     dependencies:
-      '@volar/language-service': 1.10.10
       vscode-css-languageservice: 6.2.10
       vscode-uri: 3.0.8
+    optionalDependencies:
+      '@volar/language-service': 1.10.10
 
   volar-service-emmet@0.0.16(@volar/language-service@1.10.10):
     dependencies:
-      '@volar/language-service': 1.10.10
       '@vscode/emmet-helper': 2.9.2
       volar-service-html: 0.0.16(@volar/language-service@1.10.10)
+    optionalDependencies:
+      '@volar/language-service': 1.10.10
 
   volar-service-html@0.0.16(@volar/language-service@1.10.10):
     dependencies:
-      '@volar/language-service': 1.10.10
       vscode-html-languageservice: 5.1.1
       vscode-uri: 3.0.8
+    optionalDependencies:
+      '@volar/language-service': 1.10.10
 
   volar-service-prettier@0.0.16(@volar/language-service@1.10.10):
-    dependencies:
+    optionalDependencies:
       '@volar/language-service': 1.10.10
 
   volar-service-typescript-twoslash-queries@0.0.16(@volar/language-service@1.10.10):
-    dependencies:
+    optionalDependencies:
       '@volar/language-service': 1.10.10
 
   volar-service-typescript@0.0.16(@volar/language-service@1.10.10)(@volar/typescript@1.10.10):
     dependencies:
-      '@volar/language-service': 1.10.10
       '@volar/typescript': 1.10.10
       path-browserify: 1.0.1
       semver: 7.5.4
@@ -6142,6 +6149,8 @@ snapshots:
       vscode-languageserver-textdocument: 1.0.11
       vscode-nls: 5.2.0
       vscode-uri: 3.0.8
+    optionalDependencies:
+      '@volar/language-service': 1.10.10
 
   vscode-css-languageservice@6.2.10:
     dependencies:
