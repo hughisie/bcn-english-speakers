@@ -8,7 +8,6 @@ export type GenericMediaItem = {
   createdTime: Date;
 };
 
-
 export enum MeetupRsvpAttendanceStatusEnum {
   Coming = 1,
   Maybe = 2,
@@ -37,8 +36,7 @@ type UserRsvpInfo = Pick<
   "nickname" | "email" | "telegram" | "firstname" | "lastname" | "mobile"
 >;
 
-
-type MeetupRsvpResponseType = 'YES' | 'NO' | 'MAYBE';
+type MeetupRsvpResponseType = "YES" | "NO" | "MAYBE";
 
 type RsvpType = {
   /** UUID of the RSVP response */
@@ -53,7 +51,7 @@ type RsvpType = {
   responseTimestampUpdated: string;
   /** Incremental number of times the user has edited their RSVP */
   changedTimes: number;
-}
+};
 /** Type for people responding to meetup events */
 export type MeetupRsvpResponse =
   /** Even though the user data can be looked up from the userID, this is what they share with the event in question */
@@ -62,7 +60,6 @@ export type MeetupRsvpResponse =
   | RsvpType;
 
 export type MeetupUserRole = "ADMIN" | "HOST" | "COHOST" | "USER";
-
 
 /** The model for users giving an rsvp to meetups */
 export interface MeetupRsvpModel {
@@ -80,19 +77,17 @@ export interface MeetupRsvpModel {
   comment: string;
 }
 
-
-
 export enum MeetupStatusEnum {
   /** Events in draft state are not public */
-  Draft = 'DRAFT',
+  Draft = "DRAFT",
   /** An normal, published event. Users can rsvp */
-  Published = 'PUBLISHED',
+  Published = "PUBLISHED",
   /** Archived events - support for when we need it. Archived events can be un-deleted */
-  Archived = 'ARCHIVED',
+  Archived = "ARCHIVED",
   /** Soft deleted events do not appear in any normal API data feed. They only exist in the database. */
-  SoftDeleted = 'SOFTDELETED',
+  SoftDeleted = "SOFTDELETED",
   /** @todo - Admin hard delete? */
-  Deleted = 'DELETED',
+  Deleted = "DELETED",
 }
 export type MeetupConfig = {
   /** 0=any number, 1=min one attendee required for the event to start */
@@ -121,8 +116,18 @@ export type MeetupConfig = {
 //   CONFIRM: 'Confirm',
 //   REGISTER: 'Register'
 // };
-export type RsvpButtonCtaTypes = "RSVP" | "JOIN" | "GET_TICKET" | "COMING" | "REPLY" | "CONNECT" | "ATTEND" | "GOING" | "CONFIRM" | "REGISTER";
-export const RsvpButtonCtaDefault = 'ATTEND' satisfies RsvpButtonCtaTypes;
+export type RsvpButtonCtaTypes =
+  | "RSVP"
+  | "JOIN"
+  | "GET_TICKET"
+  | "COMING"
+  | "REPLY"
+  | "CONNECT"
+  | "ATTEND"
+  | "GOING"
+  | "CONFIRM"
+  | "REGISTER";
+export const RsvpButtonCtaDefault = "ATTEND" satisfies RsvpButtonCtaTypes;
 export type MeetupRsvpCertainty = "DEFINITE" | "INDEFINITE";
 export type MeetupPrivacy = 1 | 2 | 3;
 export const MEETUP_CATEGORIES = {
@@ -214,14 +219,14 @@ export type MeetupPromoModifier = {
   codeExpiryTime?: string;
 };
 
-type HostRoleType = 'ORGANISER' | 'CO_ORGANISER' | 'COMMUNITY_MANAGER';
+type HostRoleType = "ORGANISER" | "CO_ORGANISER" | "COMMUNITY_MANAGER";
 export type MeetupHostList = {
   /** ID of the user on the list */
   userId: string;
   /** The role that this person has for the event */
   hostRole: HostRoleType | string;
   isOrganiser?: boolean;
-}
+};
 
 export interface MeetupItem {
   /** Meetup ID */
@@ -290,3 +295,53 @@ export interface MeetupItem {
   // responses: Array<EventResponseModel>;
   // @todo - requires bizum before arrival?
 }
+
+export type MeetupGroupItem = {
+  /** The group ID */
+  groupId: string;
+  /** Unique slug for the group, like my-amazing-meetup */
+  slug: string;
+  /** The user ID of the group creator */
+  ownerId: string;
+  /** The group display name */
+  groupName: string;
+  /** Will be like Spain, Barcelona or Poblenou, depending on what the group wants to show */
+  groupLocation: string;
+  /** @todo - Unique public API key for the group */
+  apiKey: string;
+  /** If the group has been verified by us as being a real human group */
+  isVerified: boolean;
+  /** Show/hide the group in a public listing */
+  isPublic: boolean;
+  /** UTC of when user signed up */
+  signupDate: Date;
+  /** UTC of user's last logged-in time */
+  lastLogin: Date;
+  /** List of meetup IDs related to this group */
+  meetupIds: string[];
+  /** Logo for the meetup group - main logo will be featured=true */
+  logo: GenericMediaItem[];
+  /** Profile photos for the group */
+  profilePhoto: GenericMediaItem[];
+  /** HTML about the group */
+  about: string;
+  /** If paid event refund link visited, a block of HTML about how it works for this group */
+  refundPolicy: string;
+  /** Social media info for the group */
+  social: {
+    facebook: string;
+    instagram: string;
+    linkedin: string;
+    telegram: string;
+    tiktok: string;
+    twitter: string;
+    website: string;
+    whatsapp: string;
+    youtube: string;
+    bizum: string;
+  };
+  /** Like Europe/Madrid */
+  timezone: string;
+  /** Tag-like list of topics and themes that the group is concerned with, such as: meetups, foreigners in BCN, english speaking, etc */
+  topics: string[];
+};
