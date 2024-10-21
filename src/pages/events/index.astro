@@ -1,0 +1,31 @@
+---
+import Layout from "../../layouts/layout.astro";
+import Container from "../../components/page-container.astro";
+import EventsApp from '../../components/events/EventsApp';
+// import { getGroups } from "../../services/group.service";
+
+// const groups = await getGroups();
+---
+<style is:global>
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(114, 114, 114, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(72, 72, 72);
+  outline: 1px solid rgb(36, 36, 36);
+}
+
+</style>
+
+<Layout title={"Events - Barcelona English Speakers Community"}>
+  <main>
+    <Container class:list={"!max-w-5xl"}>
+      <EventsApp client:only="preact"></EventsApp>
+    </Container>
+  </main>
+</Layout>
