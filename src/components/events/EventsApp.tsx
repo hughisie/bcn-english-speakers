@@ -5,7 +5,12 @@ import { AppStateProvider } from "./contexts/AppStateProvider";
 import { initialState, type AppState } from "./state/state";
 import EventsList from "./screens/EventsList/EventsList";
 import { useEffect } from "preact/hooks";
-import { getGroupInfo } from "../../services/events.service";
+import {
+  getEventsByOrganiserId,
+  getGroupInfo,
+  hasUpdatedRecently,
+} from "../../services/events.service";
+import GroupHeader from './components/GroupHeader';
 
 export default function EventsApp() {
   const LOCAL_STORAGE_KEYS = {
@@ -27,12 +32,28 @@ export default function EventsApp() {
 
   // useEffect here to fetch group ID and events for the group
   useEffect(() => {
-    if (!appState.value.groupInfo.data) {
-      // fetch group info
-      getGroupInfo().catch((e) => {
-        // show fetch error and retry button
-      });
+    if (
+      appState.value.groupInfo.data &&
+      hasUpdatedRecently(appState.value.groupInfo.lastFetched)
+    ) {
+      return;
     }
+    const p1 = getGroupInfo;
+    const p2 = getEventsByOrganiserId;
+    (async () => {
+      const groupInfo = await p1();
+      if (!groupInfo || !groupInfo.data) {
+        throw new Error("Failed to fetch group");
+      }
+
+      const meetups = await p2();
+
+      appState.value = {
+        ...appState.value,
+        groupInfo,
+        meetups,
+      };
+    })();
   }, [appState]);
 
   return (
@@ -51,8 +72,8 @@ function App({ appState }: AppProps) {
   } = appState;
   return (
     <div class="mx-auto max-w-lg min-h-[100vh]">
-      <p>App here</p>
-      {currentScreen === "HOME" && <EventsList />}
+      <GroupHeader state={appState} />
+      {currentScreen === "HOME" && <EventsList state={appState} />}
     </div>
   );
 }

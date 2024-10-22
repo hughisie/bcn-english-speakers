@@ -20,7 +20,7 @@ export type AppState = {
 };
 
 /** Generic type for storing fetch data */
-type ApiFetchInfo<T = unknown> = {
+export type ApiFetchInfo<T = unknown> = {
   lastFetched: number;
   data: T;
 };
