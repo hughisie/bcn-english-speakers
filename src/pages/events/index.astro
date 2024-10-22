@@ -23,9 +23,5 @@ import EventsApp from '../../components/events/EventsApp';
 </style>
 
 <Layout title={"Events - Barcelona English Speakers Community"}>
-  <main>
-    <Container class:list={"!max-w-5xl"}>
-      <EventsApp client:only="preact"></EventsApp>
-    </Container>
-  </main>
+  <EventsApp client:only="preact"></EventsApp>
 </Layout>

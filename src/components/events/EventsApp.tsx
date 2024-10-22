@@ -71,9 +71,14 @@ function App({ appState }: AppProps) {
     value: { currentScreen },
   } = appState;
   return (
-    <div class="mx-auto max-w-lg min-h-[100vh]">
-      <GroupHeader state={appState} />
-      {currentScreen === "HOME" && <EventsList state={appState} />}
+    <div>
+      <div class="mx-auto max-w-xl min-h-[100vh] border border-slate-200 rounded-b-lg">
+        <GroupHeader state={appState} />
+        <div>
+        <hr />
+        {currentScreen === "HOME" && <EventsList state={appState} />}
+        </div>
+      </div>
     </div>
   );
 }

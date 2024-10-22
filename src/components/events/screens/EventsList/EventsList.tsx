@@ -1,6 +1,6 @@
 import type { Signal } from "@preact/signals";
 import type { AppState } from "../../state/state";
-import type { MeetupItem } from "../../../../types/types";
+import EventItem from "./EventItem";
 
 type EventsListProps = {
   state: Signal<AppState>;
@@ -12,17 +12,12 @@ export default function EventsList({ state }: EventsListProps) {
   }
 
   return (
-    <div class="my-6">
+    <div class="py-6 px-4">
+      <h2 class="text-2xl font-bold">Events</h2>
+
       {data.map((item) => (
-        <ListItem item={item} key={item.meetupId} />
+        <EventItem item={item} key={item.meetupId} />
       ))}
     </div>
   );
-}
-
-type ListItemProps = {
-  item: MeetupItem;
-};
-function ListItem({ item }: ListItemProps) {
-  return <div class="my-6">{item.title}</div>;
 }

@@ -23,8 +23,8 @@ export const menuItems: NavItem[] = [
     title: "Community",
     path: "/community",
   },
-  // {
-  //   title: "Contact",
-  //   path: "/contact",
-  // },
+  {
+    title: "Events",
+    path: "/events",
+  },
 ];
