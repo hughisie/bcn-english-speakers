@@ -1,4 +1,5 @@
-import type { GenericMediaItem, MeetupItem } from "../../../../types/types";
+import { getEventFromToDate, getLocationInfo } from '../../../../services/events.service';
+import type { GenericMediaItem, MeetupGroupItem, MeetupItem } from "../../../../types/types";
 import { getFeaturedMediaItem } from "../../utils/utils";
 
 const eventPlaceholderImage: GenericMediaItem = {
@@ -11,8 +12,9 @@ const eventPlaceholderImage: GenericMediaItem = {
 
 type EventItemProps = {
   item: MeetupItem;
+  group: MeetupGroupItem;
 };
-export default function EventItem({ item }: EventItemProps) {
+export default function EventItem({ item, group }: EventItemProps) {
   const {
     category,
     description,
@@ -43,12 +45,16 @@ export default function EventItem({ item }: EventItemProps) {
     waitingList,
   } = item;
   const mainPhoto = getFeaturedMediaItem(photos);
+  const locationString = getLocationInfo(item);
+
   return (
-    <article class="my-6 rounded-lg bg-slate-50 border border-slate-200 p-4">
+    <article class="my-6 rounded-lg bg-slate-50 border border-slate-200 p-4 text-sm md:text-base">
       <div class="flex flex-row justify-between gap-2">
         <div class="flex-grow">
-          <time>{item.startTime}</time>
-          <h2>{item.title}</h2>
+          <time datetime={new Date(item.startTime).toISOString()}>{getEventFromToDate(item)}</time>
+          <h2 class="my-1 text-xl tracking-tight">{item.title}</h2>
+          <p>By <strong>{group.groupName}</strong></p>
+          <h3>Icon Location: <strong>{locationString}</strong></h3>
         </div>
         <div class="basis-1/3">
           {mainPhoto && (
@@ -70,3 +76,4 @@ export default function EventItem({ item }: EventItemProps) {
     </article>
   );
 }
+

@@ -7,7 +7,8 @@ type EventsListProps = {
 };
 export default function EventsList({ state }: EventsListProps) {
   const { data = null } = state.value.meetups;
-  if (!data) {
+  const { data: groupData = null } = state.value.groupInfo;
+  if (!data || !groupData) {
     return <div>Loading list...</div>;
   }
 
@@ -16,7 +17,7 @@ export default function EventsList({ state }: EventsListProps) {
       <h2 class="text-2xl font-bold">Events</h2>
 
       {data.map((item) => (
-        <EventItem item={item} key={item.meetupId} />
+        <EventItem item={item} key={item.meetupId} group={groupData} />
       ))}
     </div>
   );

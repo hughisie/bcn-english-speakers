@@ -10,7 +10,7 @@ import {
   getGroupInfo,
   hasUpdatedRecently,
 } from "../../services/events.service";
-import GroupHeader from './components/GroupHeader';
+import GroupHeader from "./components/GroupHeader";
 
 export default function EventsApp() {
   const LOCAL_STORAGE_KEYS = {
@@ -26,11 +26,20 @@ export default function EventsApp() {
 
   const appState = signal(getStoredAppData());
 
+  const addToStorage = (newState: AppState) => {
+    if (typeof window.localStorage === "undefined") return;
+    window.localStorage.setItem(
+      LOCAL_STORAGE_KEYS.APP_STATE,
+      JSON.stringify(newState)
+    );
+  };
+
   // effect(() => {
   //   window.localStorage.setItem(LOCAL_STORAGE_KEYS.APP_STATE, JSON.stringify(appState.value));
   // });
 
   // useEffect here to fetch group ID and events for the group
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (
       appState.value.groupInfo.data &&
@@ -53,6 +62,7 @@ export default function EventsApp() {
         groupInfo,
         meetups,
       };
+      addToStorage(appState.value);
     })();
   }, [appState]);
 
@@ -75,8 +85,8 @@ function App({ appState }: AppProps) {
       <div class="mx-auto max-w-xl min-h-[100vh] border border-slate-200 rounded-b-lg">
         <GroupHeader state={appState} />
         <div>
-        <hr />
-        {currentScreen === "HOME" && <EventsList state={appState} />}
+          <hr />
+          {currentScreen === "HOME" && <EventsList state={appState} />}
         </div>
       </div>
     </div>
