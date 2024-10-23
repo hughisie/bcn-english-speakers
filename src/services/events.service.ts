@@ -3,7 +3,8 @@ import { API_STUB_LOCAL } from "../consts";
 import type { MeetupGroupItem, MeetupItem } from "../types/types";
 
 const BCN_ENG_SPEAKERS_GROUP_ID = "a9989daa-d864-4b3a-82e3-899df9baccc1";
-export const API_CALL_REFRESH_PERIOD = 60000; // 1 minute
+// export const API_CALL_REFRESH_PERIOD = 60000; // 1 minute
+export const API_CALL_REFRESH_PERIOD = 6000000; // 1 minute
 
 /** Fetches BCN-ES events */
 export async function getEventsByOrganiserId(): Promise<

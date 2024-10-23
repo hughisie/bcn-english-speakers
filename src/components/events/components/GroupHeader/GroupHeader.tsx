@@ -1,7 +1,9 @@
 import type { Signal } from "@preact/signals";
-import type { AppState } from "../state/state";
-import { getFeaturedMediaItem } from "../utils/utils";
-import type { GenericMediaItem } from "../../../types/types";
+import type { AppState } from "../../state/state";
+import { getFeaturedMediaItem } from "../../utils/utils";
+import type { GenericMediaItem } from "../../../../types/types";
+import GroupLogo from "./GroupLogo";
+import GroupHeroImage from "./GroupHeroImage";
 
 const groupPlaceholderHero: GenericMediaItem = {
   id: "generic-item",
@@ -23,8 +25,8 @@ export default function GroupHeader({ state }: GroupHeaderProps) {
     groupLocation,
     groupName,
     isVerified,
-    logo,
-    profilePhoto,
+    logo = [],
+    profilePhoto = [],
     refundPolicy,
     social,
     timezone,
@@ -32,27 +34,18 @@ export default function GroupHeader({ state }: GroupHeaderProps) {
   } = group;
 
   const heroPhoto = getFeaturedMediaItem(profilePhoto);
+  const logoImage = getFeaturedMediaItem(logo);
   return (
     <section>
-      <div class="relative aspect-video flex justify-center items-center">
+      <div class="relative aspect-video flex justify-center items-center mb-16">
         <div class="absolute z-10">
           <h1 class="text-xl my-1 text-center">{groupName}</h1>
           <h2 class="text-lg my-1 text-center">{groupLocation}</h2>
         </div>
-        {heroPhoto && (
-          <img
-            src={heroPhoto.url}
-            alt={heroPhoto.alt}
-            class="min-h-full object-cover"
-          />
-        )}
-        {!heroPhoto && (
-          <img
-            src={groupPlaceholderHero.url}
-            alt="Placeholder"
-            class="min-h-full object-cover"
-          />
-        )}
+        {heroPhoto && <GroupHeroImage image={heroPhoto} />}
+        {!heroPhoto && <GroupHeroImage image={groupPlaceholderHero} />}
+        {logoImage && <GroupLogo logo={groupPlaceholderHero} />}
+        {!logoImage && <GroupLogo logo={groupPlaceholderHero} />}
       </div>
       <div class="py-6 px-4">
         <div>

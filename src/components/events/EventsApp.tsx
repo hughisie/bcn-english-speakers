@@ -10,7 +10,7 @@ import {
   getGroupInfo,
   hasUpdatedRecently,
 } from "../../services/events.service";
-import GroupHeader from "./components/GroupHeader";
+import GroupHeader from './components/GroupHeader/GroupHeader';
 
 export default function EventsApp() {
   const LOCAL_STORAGE_KEYS = {
