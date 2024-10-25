@@ -1,0 +1,15 @@
+.container {
+  background: #f3eee6
+    linear-gradient(110deg, #00000000 8%, #faf9f8 18%, #00000000 33%);
+  background-size: 200% 400%;
+  animation: 1.5s shine linear infinite;
+  display: inline-block;
+  width: 100%;
+  border-radius: var(--borderRadius, 12px);
+}
+
+@keyframes shine {
+  to {
+    background-position-x: -200%;
+  }
+}

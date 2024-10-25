@@ -11,12 +11,20 @@ export const initialState: AppState = {
     data: [],
     lastFetched: Date.now() - API_CALL_REFRESH_PERIOD,
   },
+  currentEvent: null,
+  modalState: {
+    openId: undefined,
+  },
 };
 
 export type AppState = {
   currentScreen: string;
   groupInfo: ApiFetchInfo<MeetupGroupItem | null>;
   meetups: ApiFetchInfo<MeetupItem[]>;
+  currentEvent: MeetupItem | null;
+  modalState: {
+    openId: undefined | "EVENTS";
+  };
 };
 
 /** Generic type for storing fetch data */

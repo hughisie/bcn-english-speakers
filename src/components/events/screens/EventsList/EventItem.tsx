@@ -12,9 +12,10 @@ const eventPlaceholderImage: GenericMediaItem = {
 
 type EventItemProps = {
   item: MeetupItem;
-  group: MeetupGroupItem;
+  group: MeetupGroupItem | null;
+  viewEvent: () => void;
 };
-export default function EventItem({ item, group }: EventItemProps) {
+export default function EventItem({ item, group, viewEvent }: EventItemProps) {
   const {
     category,
     description,
@@ -48,32 +49,34 @@ export default function EventItem({ item, group }: EventItemProps) {
   const locationString = getLocationInfo(item);
 
   return (
-    <article class="my-6 rounded-lg bg-slate-50 border border-slate-200 p-4 text-sm md:text-base">
-      <div class="flex flex-row justify-between gap-2">
-        <div class="flex-grow">
-          <time datetime={new Date(item.startTime).toISOString()}>{getEventFromToDate(item)}</time>
-          <h2 class="my-1 text-xl tracking-tight">{item.title}</h2>
-          <p>By <strong>{group.groupName}</strong></p>
-          <h3>Icon Location: <strong>{locationString}</strong></h3>
+    <button onClick={viewEvent} type="button">
+      <article class="my-6 rounded-lg bg-slate-100 border border-slate-200 p-4 text-sm md:text-base">
+        <div class="flex flex-row justify-between gap-2">
+          <div class="flex-grow">
+            <time datetime={new Date(item.startTime).toISOString()}>{getEventFromToDate(item)}</time>
+            <h2 class="my-1 text-xl tracking-tight">{item.title}</h2>
+            <p>By <strong>{group?.groupName ?? ''}</strong></p>
+            <h3>Icon Location: <strong>{locationString}</strong></h3>
+          </div>
+          <div class="basis-1/3">
+            {mainPhoto && (
+              <img
+                src={mainPhoto.url}
+                alt={mainPhoto.alt}
+                class="min-h-full object-cover"
+              />
+            )}
+            {!mainPhoto && (
+              <img
+                src={eventPlaceholderImage.url}
+                alt={eventPlaceholderImage.alt}
+                class="min-h-full object-cover"
+              />
+            )}
+          </div>
         </div>
-        <div class="basis-1/3">
-          {mainPhoto && (
-            <img
-              src={mainPhoto.url}
-              alt={mainPhoto.alt}
-              class="min-h-full object-cover"
-            />
-          )}
-          {!mainPhoto && (
-            <img
-              src={eventPlaceholderImage.url}
-              alt={eventPlaceholderImage.alt}
-              class="min-h-full object-cover"
-            />
-          )}
-        </div>
-      </div>
-    </article>
+      </article>
+    </button>
   );
 }
 

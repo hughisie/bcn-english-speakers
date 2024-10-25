@@ -1,0 +1,192 @@
+$animationDurationSecs: 0.5s;
+
+$backDropBackground: rgba(23, 23, 26, 0.5);
+
+$dialogHeights: 25, 33, 50, 66, 75, 87, 100;
+
+@mixin dialogMaxHeight($height) {
+  max-height: #{$height}dvh;
+}
+
+:global {
+  // Stop background scrolling when dialog is open
+  html:has(dialog[open]) {
+    overflow: hidden;
+  }
+}
+
+.container {
+  width: 100vw;
+  max-width: none;
+  max-height: none;
+  height: 100vh; // Safari needs a height
+  margin-top: auto;
+  margin-bottom: 0;
+  border: none;
+  border-radius: 1rem 1rem 0 0;
+  background: #f3f3f3ef;
+  padding: 0;
+
+  &[open] {
+    animation: show $animationDurationSecs ease normal;
+
+    @media (prefers-reduced-motion) {
+      animation: none;
+    }
+  }
+
+  &::backdrop {
+    animation: backdropShow $animationDurationSecs ease forwards;
+
+    @media (prefers-reduced-motion) {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    background: #f3f3f3ff;
+    // build mobile dialog height classes from vars
+    @each $height in $dialogHeights {
+      &.h#{$height} {
+        @include dialogMaxHeight($height);
+      }
+    }
+  }
+}
+
+
+.article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: calc(100vh - 2rem);
+}
+
+.isClosing.isClosing {
+  animation: hide $animationDurationSecs ease normal;
+
+  @media (prefers-reduced-motion) {
+    animation: hide 1ms; // 1ms allows the `endanimation` event to fire
+  }
+
+  &::backdrop {
+    animation: backdropHide $animationDurationSecs ease forwards;
+
+    @media (prefers-reduced-motion) {
+      animation: none;
+    }
+  }
+}
+
+
+.closeButton {
+  all: unset;
+  height: 3rem;
+  width: 3rem;
+  flex: 3rem 0 0;
+  display: flex;
+  cursor: pointer;
+  border-radius: 100%;
+}
+
+@keyframes show {
+  from {
+    transform: translateY(100%);
+    display: none;
+  }
+  to {
+    transform: translateY(0%);
+    display: block;
+  }
+}
+
+@keyframes hide {
+  from {
+    transform: translateY(0%);
+    display: block;
+  }
+  to {
+    transform: translateY(100%);
+    display: none;
+  }
+}
+
+@keyframes backdropShow {
+  from {
+    background: none;
+  }
+
+  to {
+    background: $backDropBackground;
+  }
+}
+
+@keyframes backdropHide {
+  from {
+    background: $backDropBackground;
+  }
+
+  to {
+    background: none;
+  }
+}
+
+// ----------- Desktop Overrides ---------------
+
+@media screen and (min-width: 768px) {
+  .container {
+    margin-right: 0;
+    margin-left: auto;
+    max-height: 100vh;
+    height: 100vh;
+    width: 472px;
+    border-radius: 16px 0 0 16px;
+    padding: 0;
+  }
+
+  .article {
+    max-height: 100%;
+  }
+
+  .content {
+    padding: 1rem;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .header {
+    flex-direction: row;
+    align-items: start;
+    gap: 1rem;
+    border-bottom: none;
+    margin-bottom: 0;
+    padding: pxToRem(28) pxToRem(24) pxToRem(24); // no tokens match the Figma
+  }
+
+  
+  .footer {
+    padding: 0;
+  }
+
+  @keyframes show {
+    from {
+      transform: translateX(100%);
+      display: none;
+    }
+    to {
+      transform: translateX(0%);
+      display: block;
+    }
+  }
+
+  @keyframes hide {
+    from {
+      transform: translateX(0%);
+      display: block;
+    }
+    to {
+      transform: translateX(100%);
+      display: none;
+    }
+  }
+}
