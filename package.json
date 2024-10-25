@@ -39,7 +39,10 @@
     "typescript": "^5.2.2"
   },
   "devDependencies": {
+    "@iconify-json/ri": "^1.2.2",
+    "classnames": "^2.5.1",
     "hastscript": "^8.0.0",
-    "sass": "^1.77.3"
+    "sass": "^1.77.3",
+    "tailwind-merge": "^2.5.4"
   }
 }
