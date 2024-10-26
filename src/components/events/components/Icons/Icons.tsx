@@ -191,6 +191,60 @@ function RiMapPin2Line(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+function RiCloseLargeFill(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <title>Close icon</title>
+      <path
+        fill="currentColor"
+        d="M10.586 12L2.793 4.207l1.414-1.414L12 10.586l7.793-7.793l1.414 1.414L13.414 12l7.793 7.793l-1.414 1.414L12 13.414l-7.793 7.793l-1.414-1.414z"
+      />
+    </svg>
+  );
+}
+
+function RiAccountCircleFill(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <title>Account circle full</title>
+      <path
+        fill="currentColor"
+        d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12S6.48 2 12 2M6.023 15.416C7.491 17.606 9.695 19 12.16 19s4.669-1.393 6.136-3.584A8.97 8.97 0 0 0 12.16 13a8.97 8.97 0 0 0-6.137 2.416M12 11a3 3 0 1 0 0-6a3 3 0 0 0 0 6"
+      />
+    </svg>
+  );
+}
+
+function RiInformation2Line(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="1em"
+      height="1em"
+      viewBox="0 0 24 24"
+      {...props}
+    >
+      <title>Information icon</title>
+      <path
+        fill="currentColor"
+        d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m0-2a8 8 0 1 0 0-16a8 8 0 0 0 0 16m1-9.5V15h1v2h-4v-2h1v-2.5h-1v-2zm.5-2.5a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0"
+      />
+    </svg>
+  );
+}
+
 export {
   RiFacebookBoxFill,
   RiInstagramLine,
@@ -203,4 +257,7 @@ export {
   RiYoutubeLine,
   RiAwardFill,
   RiMapPin2Line,
+  RiCloseLargeFill,
+  RiAccountCircleFill,
+  RiInformation2Line,
 };

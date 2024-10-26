@@ -1,6 +1,11 @@
 import type { ApiFetchInfo } from "../components/events/state/state";
 import { API_STUB_LOCAL } from "../consts";
-import type { MeetupGroupItem, MeetupItem } from "../types/types";
+import {
+  RsvpButtonCtaDefault,
+  type MeetupGroupItem,
+  type MeetupItem,
+  type RsvpButtonCtaTypes,
+} from "../types/types";
 
 const BCN_ENG_SPEAKERS_GROUP_ID = "a9989daa-d864-4b3a-82e3-899df9baccc1";
 // export const API_CALL_REFRESH_PERIOD = 60000; // 1 minute
@@ -144,3 +149,21 @@ const MONTHS = [
   "November",
   "December",
 ];
+
+export const meetupLocationIsDisclosedYet = ({
+  locationDisclosureAt,
+}: MeetupItem): boolean => {
+  let locationIsDisclosed = true;
+
+  if (locationDisclosureAt) {
+    const disclosedDate = new Date(locationDisclosureAt);
+    locationIsDisclosed = disclosedDate.getTime() < Date.now();
+  }
+  return locationIsDisclosed;
+};
+
+export const getRsvpButtonLabel = ({ eventConfig }: MeetupItem): string => {
+  const ctaType = eventConfig?.rsvpButtonCtaType ?? RsvpButtonCtaDefault;
+  // @todo - if we need a special label for the type, do a switch here...
+  return ctaType.replace("_", " ");
+};

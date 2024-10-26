@@ -10,11 +10,11 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
 }
 
 const variants = {
-  primary: "btn-primary",
-  secondary: "btn-secondary",
-  tertiary: "btn btn-tertiary",
-  outline: "btn btn-outline",
-  link: "cursor-pointer hover:text-velvet",
+  primary: "btn-primary bg-cyan-700 border-cyan-700 text-white",
+  secondary: "btn-secondary border-orange-700 bg-orange-700 ",
+  tertiary: "btn btn-tertiary bg-white border-white",
+  outline: "btn btn-outline border border-cyan-700 text-cyan-700",
+  link: "cursor-pointer hover:text-velvet border border-transparent",
 };
 
 export default function Button({
@@ -24,11 +24,13 @@ export default function Button({
   classes,
   ...rest
 }: ButtonProps) {
+  const buttonClasses = 'border px-8 whitespace-nowrap py-4 font-semibold text-lg'
   return (
     <button
       type={type}
       class={twMerge(
         variants[variant] || "",
+        buttonClasses,
         "disabled:opacity-25 disabled:cursor-default disabled:pointer-events-none rounded-md whitespace-nowrap",
         classes
       )}

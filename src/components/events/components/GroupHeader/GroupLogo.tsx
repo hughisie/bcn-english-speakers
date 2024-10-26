@@ -8,7 +8,7 @@ export default function GroupLogo({ logo }: GroupLogoProps) {
   return (
     <img
       src={logo.url}
-      alt="Placeholder"
+      alt={logo.alt}
       class="object-cover aspect-square w-32 h-32 absolute -bottom-16 left-4 border-4 border-white rounded-md"
     />
   );

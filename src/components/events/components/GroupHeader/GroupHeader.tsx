@@ -4,19 +4,12 @@ import type {
   MeetupGroupItem,
 } from "../../../../types/types";
 import GroupLogo from "./GroupLogo";
-import GroupHeroImage from "./GroupHeroImage";
+import HeroImage from "../HeroImage/HeroImage";
 import SocialIcons from "./SocialIcons";
 import SkeletonShape from "../Skeleton/SkeletonShape";
-import type { SVGProps } from "preact/compat";
 import { RiAwardFill, RiMapPin2Line } from "../Icons/Icons";
+import { PLACEHOLDER_HERO } from '../../types/config';
 
-const groupPlaceholderHero: GenericMediaItem = {
-  id: "generic-item",
-  url: "https://cdn.pocketbarcelona.com/app/places/images/avif/placeholder_large.avif",
-  alt: "Hero",
-  mediaType: "IMAGE",
-  createdTime: new Date(),
-};
 type GroupHeaderProps = {
   group: MeetupGroupItem | null;
 };
@@ -50,10 +43,10 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
             <span>Verified Group</span>
           </div>
         )}
-        {heroPhoto && <GroupHeroImage image={heroPhoto} />}
-        {!heroPhoto && <GroupHeroImage image={groupPlaceholderHero} />}
-        {logoImage && <GroupLogo logo={groupPlaceholderHero} />}
-        {!logoImage && <GroupLogo logo={groupPlaceholderHero} />}
+        {heroPhoto && <HeroImage image={heroPhoto} />}
+        {!heroPhoto && <HeroImage image={PLACEHOLDER_HERO} />}
+        {logoImage && <GroupLogo logo={PLACEHOLDER_HERO} />}
+        {!logoImage && <GroupLogo logo={PLACEHOLDER_HERO} />}
       </div>
 
       <div class="py-6 px-4">
@@ -74,7 +67,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
             dangerouslySetInnerHTML={{
               __html: about,
             }}
-            class="my-6 prose line-clamp-6 overflow-hidden text-ellipsis"
+            class="my-6 prose tracking-tight line-clamp-6 overflow-hidden text-ellipsis"
           />
         </div>
         <hr />
@@ -98,7 +91,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
             dangerouslySetInnerHTML={{
               __html: refundPolicy,
             }}
-            class="prose"
+            class="prose tracking-tight"
           />
         </div>
         
