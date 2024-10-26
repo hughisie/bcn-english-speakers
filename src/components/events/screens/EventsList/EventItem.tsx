@@ -49,7 +49,7 @@ export default function EventItem({ item, group, viewEvent }: EventItemProps) {
   const locationString = getLocationInfo(item);
 
   return (
-    <button onClick={viewEvent} type="button">
+    <button onClick={viewEvent} type="button" class="text-left">
       <article class="my-6 rounded-lg bg-slate-100 border border-slate-200 p-4 text-sm md:text-base">
         <div class="flex flex-row justify-between gap-2">
           <div class="flex-grow">

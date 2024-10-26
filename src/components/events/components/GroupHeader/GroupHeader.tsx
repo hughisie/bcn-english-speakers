@@ -8,6 +8,7 @@ import GroupHeroImage from "./GroupHeroImage";
 import SocialIcons from "./SocialIcons";
 import SkeletonShape from "../Skeleton/SkeletonShape";
 import type { SVGProps } from "preact/compat";
+import { RiAwardFill, RiMapPin2Line } from "../Icons/Icons";
 
 const groupPlaceholderHero: GenericMediaItem = {
   id: "generic-item",
@@ -24,14 +25,12 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
 
   const {
     about,
-    groupId,
     groupLocation,
     groupName,
     isVerified,
     logo = [],
     profilePhoto = [],
     refundPolicy,
-    social,
     timezone,
     topics,
   } = group;
@@ -42,41 +41,67 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
     <section>
       <div class="relative aspect-video flex justify-center items-center mb-16">
         <div class="absolute z-10">
-          <h1 class="text-xl my-1 text-center">{groupName}</h1>
-          <h2 class="text-lg my-1 text-center">{groupLocation}</h2>
+          <h1 class="text-xl my-1 text-center tracking-tight">{groupName}</h1>
+          <h2 class="text-lg my-1 text-center tracking-tight">{groupLocation}</h2>
         </div>
+        {isVerified && (
+          <div class="absolute z-10 bottom-3 right-3 text-white bg-green-600 px-3 py-1.5 rounded-md text-xs uppercase flex flex-row items-center gap-1 shadow-md">
+            <RiAwardFill width={13} height={13} />
+            <span>Verified Group</span>
+          </div>
+        )}
         {heroPhoto && <GroupHeroImage image={heroPhoto} />}
         {!heroPhoto && <GroupHeroImage image={groupPlaceholderHero} />}
         {logoImage && <GroupLogo logo={groupPlaceholderHero} />}
         {!logoImage && <GroupLogo logo={groupPlaceholderHero} />}
       </div>
+
       <div class="py-6 px-4">
         <div>
-          <h3 class="flex flex-row items-center gap-1 text-xl">
-            {groupName}, <RiMapPin2Line />
+          <h3 class="flex flex-row items-center gap-1 text-xl tracking-tight">
+            {groupName}<RiMapPin2Line />
             <span class="text-sm">based in {groupLocation}</span>
           </h3>
+          <div class="my-2 mb-6">
+            <div class="flex flex-row flex-wrap gap-2 items-center">
+              <span class="tracking-tight text-sm">Social:</span>
+              <SocialIcons item={group} />
+              
+            </div>
+          </div>
           <div
             // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
             dangerouslySetInnerHTML={{
               __html: about,
             }}
-            class="my-4"
+            class="my-6 prose line-clamp-6 overflow-hidden text-ellipsis"
           />
         </div>
+        <hr />
         <div class="my-4">
-          <h3>Topics</h3>
-          <div class="flex flex-row gap-1">
+          <h3 class="text-lg font-semibold">Topics</h3>
+          <div class="italic text-gray-700">
             {topics.map((topic) => {
-              <span key={topic}>{topic}</span>;
+              return (
+                <span key={topic} class="whitespace-nowrap inline-block mr-4">
+                  {topic}
+                </span>
+              );
             })}
           </div>
         </div>
+        <hr />
         <div class="my-4">
-          <h3 class="text-sm">Refund Policy</h3>
-          <div>{refundPolicy}</div>
+          <h3 class="text-lg font-semibold">Refund Policy</h3>
+          <div
+            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+            dangerouslySetInnerHTML={{
+              __html: refundPolicy,
+            }}
+            class="prose"
+          />
         </div>
-        <SocialIcons item={group} />
+        
       </div>
     </section>
   );
@@ -95,20 +120,3 @@ function GroupHeaderSkeleton() {
   );
 }
 
-export function RiMapPin2Line(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1em"
-      height="1em"
-      viewBox="0 0 24 24"
-      {...props}
-    >
-      <title>Map pin icon</title>
-      <path
-        fill="currentColor"
-        d="m12 23.728l-6.364-6.364a9 9 0 1 1 12.728 0zm4.95-7.778a7 7 0 1 0-9.9 0L12 20.9zM12 13a2 2 0 1 1 0-4a2 2 0 0 1 0 4"
-      />
-    </svg>
-  );
-}
