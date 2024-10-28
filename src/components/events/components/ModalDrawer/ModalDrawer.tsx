@@ -113,7 +113,10 @@ export default function ModalDrawer({
             <div class="flex flex-col overflow-y-auto flex-shrink flex-grow px-6 pt-6 my-0">
               <div>{children}</div>
             </div>
-            {footer && <footer className={styles.footer}>{footer}</footer>}
+            {footer && <footer className={cn(
+              styles.footer,
+              "bg-slate-100 shadow-sm"
+            )}>{footer}</footer>}
           </Context.Provider>
         </article>
       )}

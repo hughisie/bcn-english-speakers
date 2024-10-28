@@ -28,6 +28,7 @@ export default function EventRegistration({ event }: EventRegistrationProps) {
   const paymentScheme = getPaymentSchemeReadout(event);
   const rsvpStatus = eventRSVPStatus(event);
   const eventAttendeesCriteria = getEventAttendeesCriteria(event);
+  
 
   return (
     <div class="my-2 rounded-md overflow-hidden border border-slate-100">
@@ -78,6 +79,7 @@ export default function EventRegistration({ event }: EventRegistrationProps) {
           </div>
         )}
 
+
         {/* Check Bizum info Form for signup? Check waiting list status Form: name
         Additional fields: email, phone, address, lastname, social profile Form
         intro text telling the user what to do (please enter your instagram)
@@ -85,10 +87,7 @@ export default function EventRegistration({ event }: EventRegistrationProps) {
         guests on signup 2. Message if they are on the waiting list 3. Requires
         identity card? Check min/max attendees Will you be bringing a friend?
         How many guests will you bring with you? */}
-        <div class="flex flex-row items-center gap-2">
-          <span class="text-sm">Price:</span>
-          <span class="text-sm font-bold">{event.price.priceCents}</span>
-        </div>
+        
       </div>
     </div>
   );

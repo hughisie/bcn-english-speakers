@@ -1,4 +1,8 @@
-import { getRsvpButtonLabel, eventPriceIsFree } from "../../../../services/events.service";
+import {
+  getRsvpButtonLabel,
+  eventPriceIsFree,
+  eventRSVPStatus,
+} from "../../../../services/events.service";
 import Button from "../../components/Button/Button";
 import HeroImage from "../../components/HeroImage/HeroImage";
 import { RiAccountCircleFill } from "../../components/Icons/Icons";
@@ -41,7 +45,7 @@ export default function EventModal({ onClose }: EventModalProps) {
     meetupId,
     mode,
     photos,
-    price,
+    // price,
     privacy,
     promoCodes,
     requiresUserCheckin,
@@ -60,7 +64,6 @@ export default function EventModal({ onClose }: EventModalProps) {
     waitingList,
   } = event;
 
-  
   const eventIsFree = eventPriceIsFree(event);
   const groupLogoImage = getFeaturedMediaItem(groupInfo.logo ?? []);
 
@@ -74,7 +77,7 @@ export default function EventModal({ onClose }: EventModalProps) {
       ? "This is an in-person event"
       : "";
   const rsvpButtonLabel = getRsvpButtonLabel(event);
-
+  const rsvpStatus = eventRSVPStatus(event);
   const handleRSVP = () => {
     // onClose();
     // // wait for modal to close...
@@ -141,18 +144,21 @@ export default function EventModal({ onClose }: EventModalProps) {
         <hr />
 
         {!eventPriceIsFree && (
-          <div>
-            <EventHeading label="Refund policy" />
-            <div
-              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-              dangerouslySetInnerHTML={{
-                __html: groupInfo.refundPolicy,
-              }}
-              class="prose tracking-tight"
-            />
-          </div>
+          <>
+            <div>
+              <EventHeading label="Refund policy" />
+              <div
+                // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+                dangerouslySetInnerHTML={{
+                  __html: groupInfo.refundPolicy,
+                }}
+                class="prose tracking-tight"
+              />
+            </div>
+            <hr />
+          </>
         )}
-        <hr />
+
         <div>
           <EventHeading label="Share event" />
           <a
@@ -170,7 +176,7 @@ export default function EventModal({ onClose }: EventModalProps) {
           <Button
             onClick={onClose}
             text="Cancel"
-            variant="outline"
+            variant="tertiary"
             classes="flex-shrink-0 flex-grow basis-1/2"
           />
           <Button
@@ -178,8 +184,14 @@ export default function EventModal({ onClose }: EventModalProps) {
             text={rsvpButtonLabel}
             variant="primary"
             classes="flex-shrink-0 flex-grow basis-1/2"
+            disabled={!rsvpStatus.isAcceptingRSVPs}
           />
         </div>
+        {!rsvpStatus.isAcceptingRSVPs && (
+          <div class="py-4 pt-0 px-6 text-center font-semibold">
+            Event RSVP-ing is closed for this event.
+          </div>
+        )}
       </ModalDrawer.Footer>
     </ModalDrawer>
   );

@@ -248,3 +248,4 @@ export const getEventAttendeesCriteria = ({
     max: eventConfig.maxAttendees ?? 0,
   };
 };
+
