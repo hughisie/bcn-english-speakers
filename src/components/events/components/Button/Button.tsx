@@ -11,8 +11,8 @@ export interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
 
 const variants = {
   primary: "btn-primary bg-cyan-700 border-cyan-700 text-white",
-  secondary: "btn-secondary border-orange-700 bg-orange-700 ",
-  tertiary: "btn btn-tertiary bg-white border-white",
+  secondary: "btn-secondary border-orange-700 bg-orange-700 text-white",
+  tertiary: "btn btn-tertiary bg-white border-cyan-700",
   outline: "btn btn-outline border border-cyan-700 text-cyan-700",
   link: "cursor-pointer hover:text-velvet border border-transparent",
 };
