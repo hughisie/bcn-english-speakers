@@ -1,5 +1,5 @@
-import type { MeetupItem } from "../../../../types/types";
-import { getEventDateReadout, getMonthName } from '../../utils/utils';
+import type { MeetupItem } from "../../../../../types/types";
+import { getEventDateReadout, getMonthName } from '../../../utils/utils';
 
 type EventDateTimeProps = {
   event: MeetupItem;

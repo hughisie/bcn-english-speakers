@@ -83,17 +83,7 @@ export default function GroupHeader({ group }: GroupHeaderProps) {
             })}
           </div>
         </div>
-        <hr />
-        <div class="my-4">
-          <h3 class="text-lg font-semibold">Refund Policy</h3>
-          <div
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-            dangerouslySetInnerHTML={{
-              __html: refundPolicy,
-            }}
-            class="prose tracking-tight"
-          />
-        </div>
+        
         
       </div>
     </section>

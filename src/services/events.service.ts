@@ -1,6 +1,7 @@
 import type { ApiFetchInfo } from "../components/events/state/state";
 import { API_STUB_LOCAL } from "../consts";
 import {
+  MeetupRsvpAttendanceStatusEnum,
   RsvpButtonCtaDefault,
   type MeetupGroupItem,
   type MeetupItem,
@@ -166,4 +167,84 @@ export const getRsvpButtonLabel = ({ eventConfig }: MeetupItem): string => {
   const ctaType = eventConfig?.rsvpButtonCtaType ?? RsvpButtonCtaDefault;
   // @todo - if we need a special label for the type, do a switch here...
   return ctaType.replace("_", " ");
+};
+
+export const eventPriceIsFree = ({ price }: MeetupItem) => {
+  return price.priceCents === 0;
+};
+
+export const eventPriceIsTBC = ({ price }: MeetupItem) => {
+  return price.priceCents === -1;
+};
+
+export const getPaymentSchemeReadout = ({
+  price: { paymentScheme },
+}: MeetupItem): string => {
+  if (paymentScheme === "ON_RSVP") {
+    return "Payment required on RSVP";
+  }
+  if (paymentScheme === "ON_ARRIVAL") {
+    return "Payment required on arrival";
+  }
+  if (paymentScheme === "AFTER_EVENT") {
+    return "Payment required after the event";
+  }
+  if (paymentScheme === "NONE") {
+    return "No payment required";
+  }
+  return "Unknown";
+};
+
+export const eventRSVPStatus = ({
+  eventConfig = {} as MeetupItem["eventConfig"],
+  rsvps = [],
+}: MeetupItem): {
+  isAcceptingRSVPs: boolean;
+  spacesLeft: number;
+} => {
+  if (!eventConfig.maxAttendees || eventConfig.maxAttendees === 0) {
+    return {
+      isAcceptingRSVPs: true,
+      spacesLeft: Number.MAX_SAFE_INTEGER,
+    };
+  }
+
+  // filter out No's!
+  const confirmedRSVPs = rsvps.filter(
+    (r) => r.attendanceStatus !== MeetupRsvpAttendanceStatusEnum.Cannot
+  );
+
+  // make sure there's space for 1 more
+  if (
+    eventConfig.maxAttendees &&
+    confirmedRSVPs.length - 1 >= eventConfig.maxAttendees
+  ) {
+    return {
+      isAcceptingRSVPs: false,
+      spacesLeft: 0,
+    };
+  }
+
+  return {
+    isAcceptingRSVPs: true,
+    spacesLeft: eventConfig.maxAttendees - confirmedRSVPs.length,
+  };
+};
+
+/**
+ * Calculate the maximum number of attendees available for this user
+ * Need to check max attendees value but also if there are spaces available
+ * */
+export const getEventAttendeesCriteria = ({
+  eventConfig = {} as MeetupItem["eventConfig"],
+  rsvps = [],
+}: MeetupItem): {
+  min: number;
+  max: number;
+} => {
+  // @TODO...
+  return {
+    min: eventConfig.minAttendees ?? 0,
+    max: eventConfig.maxAttendees ?? 0,
+  };
 };

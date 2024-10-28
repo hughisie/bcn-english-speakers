@@ -97,7 +97,7 @@ export default function ModalDrawer({
       {(isOpen || isClosing) && (
         <article className={styles.article}>
           <Context.Provider value={parentContext}>
-            <header class="flex flex-row items-center py-4 px-4">
+            <header class="flex flex-row items-center py-6 px-6 bg-slate-100 shadow-sm">
               <h2 class="font-barlow text-2xl flex-grow min-w-0 m-0 leading-normal">{title}</h2>
               <button
                 className={styles.closeButton}
@@ -110,7 +110,7 @@ export default function ModalDrawer({
                 <RiCloseLargeFill width={28} height={28} />
               </button>
             </header>
-            <div class="flex flex-col overflow-y-auto flex-shrink flex-grow px-4 pt-4 my-0">
+            <div class="flex flex-col overflow-y-auto flex-shrink flex-grow px-6 pt-6 my-0">
               <div>{children}</div>
             </div>
             {footer && <footer className={styles.footer}>{footer}</footer>}

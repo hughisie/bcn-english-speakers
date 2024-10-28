@@ -164,6 +164,7 @@ export type MeetupCategoryName = keyof typeof MEETUP_CATEGORIES;
 export type MeetupMode = "IN_PERSON" | "ONLINE" | "HYBRID";
 // export type MeetupLanguage = "EN" | "CA" | "ES" | "PT" | "IT" | "FR";
 export type MeetupLocation = {
+  locationName: string;
   /** Street address */
   address1: string;
   /** locale address or neighbourhood */
@@ -195,7 +196,7 @@ export type MeetupPrice = {
   /** Like: es-ES, en-GB, en-US */
   locale: string;
   /** Payment before event or when arriving? */
-  paymentScheme: "ON_RSVP" | "ON_ARRIVAL" | "NONE";
+  paymentScheme: "ON_RSVP" | "ON_ARRIVAL" | "AFTER_EVENT" | "NONE";
   /** Whether or not user credit can be used to pay for the event */
   canUseCredit: boolean;
 };

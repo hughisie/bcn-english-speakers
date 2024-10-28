@@ -1,4 +1,4 @@
-import { getRsvpButtonLabel } from "../../../../services/events.service";
+import { getRsvpButtonLabel, eventPriceIsFree } from "../../../../services/events.service";
 import Button from "../../components/Button/Button";
 import HeroImage from "../../components/HeroImage/HeroImage";
 import { RiAccountCircleFill } from "../../components/Icons/Icons";
@@ -10,7 +10,7 @@ import EventDateTime from "./parts/EventDateTime";
 import EventHosts from "./parts/EventHosts";
 import EventLocation from "./parts/EventLocation";
 import EventHeading from "./parts/EventHeading";
-import EventRegistration from './parts/EventRegistration';
+import EventRegistration from "./parts/EventRegistration";
 
 type EventModalProps = {
   onClose: () => void;
@@ -60,6 +60,8 @@ export default function EventModal({ onClose }: EventModalProps) {
     waitingList,
   } = event;
 
+  
+  const eventIsFree = eventPriceIsFree(event);
   const groupLogoImage = getFeaturedMediaItem(groupInfo.logo ?? []);
 
   const eventImage = getFeaturedMediaItem(photos ?? []) ?? PLACEHOLDER_HERO;
@@ -132,7 +134,24 @@ export default function EventModal({ onClose }: EventModalProps) {
         <EventHeading label="Location" />
         <EventLocation event={event} />
         <hr />
+        <EventRegistration event={event} />
+        <hr />
+
         <EventHosts event={event} group={group.value.data} />
+        <hr />
+
+        {!eventPriceIsFree && (
+          <div>
+            <EventHeading label="Refund policy" />
+            <div
+              // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+              dangerouslySetInnerHTML={{
+                __html: groupInfo.refundPolicy,
+              }}
+              class="prose tracking-tight"
+            />
+          </div>
+        )}
         <hr />
         <div>
           <EventHeading label="Share event" />
@@ -145,8 +164,6 @@ export default function EventModal({ onClose }: EventModalProps) {
             Event Short URL
           </a>
         </div>
-        <hr />
-        <EventRegistration event={event} />
       </div>
       <ModalDrawer.Footer>
         <div class="flex flex-row items-center justify-center gap-4 py-4 px-6">
