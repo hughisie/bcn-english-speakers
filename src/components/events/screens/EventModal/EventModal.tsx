@@ -1,13 +1,16 @@
-import { getRsvpButtonLabel } from '../../../../services/events.service';
+import { getRsvpButtonLabel } from "../../../../services/events.service";
 import Button from "../../components/Button/Button";
 import HeroImage from "../../components/HeroImage/HeroImage";
+import { RiAccountCircleFill } from "../../components/Icons/Icons";
 import ModalDrawer from "../../components/ModalDrawer/ModalDrawer";
 import useAppStateContext from "../../contexts/AppStateProvider";
 import { PLACEHOLDER_HERO } from "../../types/config";
 import { getFeaturedMediaItem } from "../../utils/utils";
-import EventDateTime from "./EventDateTime";
-import EventHosts from './EventHosts';
-import EventLocation from './EventLocation';
+import EventDateTime from "./parts/EventDateTime";
+import EventHosts from "./parts/EventHosts";
+import EventLocation from "./parts/EventLocation";
+import EventHeading from "./parts/EventHeading";
+import EventRegistration from './parts/EventRegistration';
 
 type EventModalProps = {
   onClose: () => void;
@@ -68,7 +71,7 @@ export default function EventModal({ onClose }: EventModalProps) {
       : mode === "IN_PERSON"
       ? "This is an in-person event"
       : "";
-  const rsvpButtonLabel = getRsvpButtonLabel(event)
+  const rsvpButtonLabel = getRsvpButtonLabel(event);
 
   const handleRSVP = () => {
     // onClose();
@@ -100,18 +103,23 @@ export default function EventModal({ onClose }: EventModalProps) {
               class="object-cover aspect-square w-5 h-5 absolute rounded-full"
             />
           )}
-          <p class="text-sm">Hosted by: {groupInfo.groupName}</p>
+          <p class="text-sm flex items-center gap-2">
+            <RiAccountCircleFill width={24} height={24} />{" "}
+            <span>
+              Hosted by: <strong>{groupInfo.groupName}</strong>
+            </span>
+          </p>
         </div>
 
-        <div>
-          <h3 class="tracking-tight mt-2 font-semibold">{modeString}</h3>
+        <div class="p-2 bg-yellow-50 rounded-md">
+          <EventHeading label={modeString} class="!my-0" />
         </div>
 
         <div class="my-4">
           <EventDateTime event={event} />
         </div>
         <hr />
-        <h3 class="tracking-tight mt-2 font-semibold">About the event</h3>
+        <EventHeading label="About the event" />
         <p
           class="prose tracking-tight"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
@@ -121,16 +129,24 @@ export default function EventModal({ onClose }: EventModalProps) {
         />
         <hr />
 
-        <h3 class="tracking-tight mt-2 font-semibold">Location</h3>
+        <EventHeading label="Location" />
         <EventLocation event={event} />
         <hr />
-        <EventHosts event={event} />
+        <EventHosts event={event} group={group.value.data} />
         <hr />
         <div>
-          <h3>Share event</h3>
-          <a class="text-cyan-700 underline" href={`/events?shortId=${shortId}`} target="_blank" rel="noreferrer">Event Short URL</a>
+          <EventHeading label="Share event" />
+          <a
+            class="text-cyan-700 underline"
+            href={`/events?shortId=${shortId}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Event Short URL
+          </a>
         </div>
-
+        <hr />
+        <EventRegistration event={event} />
       </div>
       <ModalDrawer.Footer>
         <div class="flex flex-row items-center justify-center gap-4 py-4 px-6">

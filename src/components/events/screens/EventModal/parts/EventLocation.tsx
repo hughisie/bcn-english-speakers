@@ -1,7 +1,7 @@
-import { meetupLocationIsDisclosedYet } from "../../../../services/events.service";
-import type { MeetupItem } from "../../../../types/types";
-import { RiInformation2Line } from "../../components/Icons/Icons";
-import { getMonthName } from "../../utils/utils";
+import { meetupLocationIsDisclosedYet } from "../../../../../services/events.service";
+import type { MeetupItem } from "../../../../../types/types";
+import { RiInformation2Line } from "../../../components/Icons/Icons";
+import { getMonthName } from "../../../utils/utils";
 
 type EventLocationProps = {
   event: MeetupItem;
