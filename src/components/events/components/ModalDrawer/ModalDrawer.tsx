@@ -92,15 +92,16 @@ export default function ModalDrawer({
       ref={dialogRef}
       onClose={onClose}
       onCancel={event => preventClose && event.preventDefault()}
-      className={cn(styles.container, { [styles.isClosing]: isClosing }, styles[`h${maxHeightMobile}`])}
+      class={cn(styles.container, { [styles.isClosing]: isClosing }, styles[`h${maxHeightMobile}`])}
     >
       {(isOpen || isClosing) && (
-        <article className={styles.article}>
+        //  max-h-[calc(100vh-2rem)]
+        <article class="flex flex-col h-full">
           <Context.Provider value={parentContext}>
             <header class="flex flex-row items-center py-6 px-6 bg-slate-100 shadow-sm">
               <h2 class="font-barlow text-2xl flex-grow min-w-0 m-0 leading-normal">{title}</h2>
               <button
-                className={styles.closeButton}
+                class="flex items-center justify-center cursor-pointer rounded-full h-9 w-9 flex-[2rem 0 0] border-none outline-none p-2 m-0 hover:bg-slate-300 transition-all delay-75"
                 type="button"
                 onClick={onClose}
                 // biome-ignore lint/a11y/noAutofocus: <explanation>
@@ -113,10 +114,7 @@ export default function ModalDrawer({
             <div class="flex flex-col overflow-y-auto flex-shrink flex-grow px-6 pt-6 my-0">
               <div>{children}</div>
             </div>
-            {footer && <footer className={cn(
-              styles.footer,
-              "bg-slate-100 shadow-sm"
-            )}>{footer}</footer>}
+            {footer && <footer class="bg-slate-100 shadow-sm p-0">{footer}</footer>}
           </Context.Provider>
         </article>
       )}

@@ -1,7 +1,5 @@
 $animationDurationSecs: 0.5s;
-
 $backDropBackground: rgba(23, 23, 26, 0.5);
-
 $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
 
 @mixin dialogMaxHeight($height) {
@@ -54,14 +52,6 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 }
 
-
-.article {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  max-height: calc(100vh - 2rem);
-}
-
 .isClosing.isClosing {
   animation: hide $animationDurationSecs ease normal;
 
@@ -76,19 +66,6 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
       animation: none;
     }
   }
-}
-
-
-.closeButton {
-  all: unset;
-  height: 2rem;
-  width: 2rem;
-  flex: 2rem 0 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 100%;
 }
 
 @keyframes show {
@@ -143,24 +120,6 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
     height: 100vh;
     width: 520px;
     border-radius: 16px 0 0 16px;
-    padding: 0;
-  }
-
-  .article {
-    max-height: 100%;
-  }
-
-  .header {
-    flex-direction: row;
-    align-items: start;
-    gap: 1rem;
-    border-bottom: none;
-    margin-bottom: 0;
-    padding: pxToRem(28) pxToRem(24) pxToRem(24); // no tokens match the Figma
-  }
-
-  
-  .footer {
     padding: 0;
   }
 
