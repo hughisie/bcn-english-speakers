@@ -7,7 +7,6 @@ import type { MeetupItem } from "../../../types/types";
 import { LOCAL_STORAGE_KEYS } from "../types/config";
 
 function createAppState(appState: AppState) {
-
   const restartApp = () => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.APP_STATE);
     window.location.reload();
@@ -36,6 +35,13 @@ function createAppState(appState: AppState) {
     });
   };
 
+  const handleShowAttendModal = (newEvent: MeetupItem) => {
+    setAttendModalState({
+      ...attendModalState.value,
+      isOpen: true,
+    });
+  };
+
   const group = signal(appState.groupInfo);
   const setGroup = (newGroup: AppState["groupInfo"]) => {
     group.value = newGroup;
@@ -52,6 +58,11 @@ function createAppState(appState: AppState) {
     });
   };
 
+  const attendModalState = signal(appState.attendModalState);
+  const setAttendModalState = (newState: AppState["attendModalState"]) => {
+    attendModalState.value = { ...newState };
+  };
+
   const addToStorage = (newState: AppState) => {
     if (typeof window.localStorage === "undefined") return;
     window.localStorage.setItem(
@@ -66,6 +77,7 @@ function createAppState(appState: AppState) {
       ...appState,
       currentScreen: currentScreen.value,
       modalState: modalState.value,
+      attendModalState: attendModalState.value,
       currentEvent: currentEvent.value,
       groupInfo: {
         ...appState.groupInfo,
@@ -84,16 +96,19 @@ function createAppState(appState: AppState) {
     setCurrentScreen,
     modalState,
     setModalState,
+    attendModalState,
+    setAttendModalState,
     currentEvent,
     setCurrentEvent,
 
     handleShowEventModal,
+    handleShowAttendModal,
 
     group,
     setGroup,
     meetups,
     setMeetups,
-    
+
     handleCloseModals,
     restartApp,
   };
@@ -106,7 +121,12 @@ type Api = {
   setCurrentEvent: (newEvent: AppState["currentEvent"]) => void;
   modalState: Signal<AppState["modalState"]>;
   setModalState: (newState: AppState["modalState"]) => void;
+  attendModalState: Signal<AppState["attendModalState"]>;
+  setAttendModalState: (newState: AppState["attendModalState"]) => void;
+
   handleShowEventModal: (newEvent: MeetupItem) => void;
+  handleShowAttendModal: (newEvent: MeetupItem) => void;
+
   group: Signal<AppState["groupInfo"]>;
   setGroup: (newGroup: AppState["groupInfo"]) => void;
   meetups: Signal<AppState["meetups"]>;
@@ -138,6 +158,8 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
     setCurrentScreen,
     modalState,
     setModalState,
+    attendModalState,
+    setAttendModalState,
     currentEvent,
     setCurrentEvent,
     group,
@@ -147,6 +169,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
 
     handleCloseModals,
     handleShowEventModal,
+    handleShowAttendModal,
     restartApp,
   } = createAppState(storedAppState);
   return (
@@ -159,12 +182,17 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
           setCurrentEvent,
           modalState,
           setModalState,
+          attendModalState,
+          setAttendModalState,
           group,
           setGroup,
           meetups,
           setMeetups,
+
           handleShowEventModal,
+          handleShowAttendModal,
           handleCloseModals,
+
           restartApp,
         },
       }}

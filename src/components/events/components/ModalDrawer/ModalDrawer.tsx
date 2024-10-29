@@ -19,6 +19,7 @@ export type ModalDrawerProps = {
   maxHeightMobile?: 25 | 33 | 50 | 66 | 75 | 87 | 100;
   onClose?: () => void;
   preventClose?: boolean;
+  presentationMode?: 'modal' | 'drawer';
 };
 
 export default function ModalDrawer({
@@ -28,6 +29,7 @@ export default function ModalDrawer({
   isOpen = false,
   maxHeightMobile = 75,
   preventClose = false,
+  presentationMode = 'drawer',
   onClose = () => {},
 }: ModalDrawerProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -92,7 +94,7 @@ export default function ModalDrawer({
       ref={dialogRef}
       onClose={onClose}
       onCancel={event => preventClose && event.preventDefault()}
-      class={cn(styles.container, { [styles.isClosing]: isClosing }, styles[`h${maxHeightMobile}`])}
+      class={cn(styles.drawer, { [styles.isClosing]: isClosing }, styles[`h${maxHeightMobile}`])}
     >
       {(isOpen || isClosing) && (
         //  max-h-[calc(100vh-2rem)]

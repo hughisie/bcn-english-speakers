@@ -13,7 +13,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 }
 
-.container {
+.drawer {
   width: 100vw;
   max-width: none;
   max-height: none;
@@ -113,7 +113,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
 // ----------- Desktop Overrides ---------------
 
 @media screen and (min-width: 768px) {
-  .container {
+  .drawer {
     margin-right: 0;
     margin-left: auto;
     max-height: 100vh;

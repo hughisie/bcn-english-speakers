@@ -15,6 +15,10 @@ export const initialState: AppState = {
   modalState: {
     openId: undefined,
   },
+  attendModalState: {
+    isOpen: false,
+    formData: [],
+  },
 };
 
 export type AppState = {
@@ -22,8 +26,15 @@ export type AppState = {
   groupInfo: ApiFetchInfo<MeetupGroupItem | null>;
   meetups: ApiFetchInfo<MeetupItem[]>;
   currentEvent: MeetupItem | null;
+  /** State for modals, which can only be shown 1 at a time */
   modalState: {
     openId: undefined | "EVENTS";
+  };
+  /** Attend modal can show over the top of other modals */
+  attendModalState: {
+    isOpen: boolean;
+    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+    formData: any[]; // an array of RSVP info for people signing up
   };
 };
 
