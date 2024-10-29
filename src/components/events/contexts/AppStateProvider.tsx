@@ -57,10 +57,16 @@ function createAppState(appState: AppState) {
       openId: undefined,
     });
   };
-
+  
   const attendModalState = signal(appState.attendModalState);
   const setAttendModalState = (newState: AppState["attendModalState"]) => {
     attendModalState.value = { ...newState };
+  };
+  const handleCloseAttendModal = () => {
+    setAttendModalState({
+      ...attendModalState.value,
+      isOpen: false,
+    });
   };
 
   const addToStorage = (newState: AppState) => {
@@ -110,6 +116,7 @@ function createAppState(appState: AppState) {
     setMeetups,
 
     handleCloseModals,
+    handleCloseAttendModal,
     restartApp,
   };
 }
@@ -132,6 +139,7 @@ type Api = {
   meetups: Signal<AppState["meetups"]>;
   setMeetups: (newMeetups: AppState["meetups"]) => void;
   handleCloseModals: () => void;
+  handleCloseAttendModal: () => void;
   restartApp: () => void;
 };
 
@@ -168,6 +176,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
     setMeetups,
 
     handleCloseModals,
+    handleCloseAttendModal,
     handleShowEventModal,
     handleShowAttendModal,
     restartApp,
@@ -192,6 +201,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
           handleShowEventModal,
           handleShowAttendModal,
           handleCloseModals,
+          handleCloseAttendModal,
 
           restartApp,
         },

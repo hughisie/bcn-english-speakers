@@ -8,9 +8,8 @@ type AttendModalProps = {
   /** Close modal without submitting */
   onClose: () => void;
   onSignup: () => void;
-  item: MeetupItem;
 }
-export default function AttendModal({ item, onClose, onSignup }: AttendModalProps) {
+export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
   const {
     api: { attendModalState, currentEvent, group },
   } = useAppStateContext();

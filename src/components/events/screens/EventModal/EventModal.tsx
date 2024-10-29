@@ -21,7 +21,7 @@ type EventModalProps = {
 };
 export default function EventModal({ onClose }: EventModalProps) {
   const {
-    api: { modalState, currentEvent, group },
+    api: { modalState, currentEvent, group, setAttendModalState },
   } = useAppStateContext();
 
   const event = currentEvent.value;
@@ -79,6 +79,10 @@ export default function EventModal({ onClose }: EventModalProps) {
   const rsvpButtonLabel = getRsvpButtonLabel(event);
   const rsvpStatus = eventRSVPStatus(event);
   const handleRSVP = () => {
+    setAttendModalState({
+      isOpen: true,
+      formData: [],
+    });
     // onClose();
     // // wait for modal to close...
     // setTimeout(() => {
@@ -86,6 +90,7 @@ export default function EventModal({ onClose }: EventModalProps) {
     //     ...guess.value,
     //   });
     // }, 1000);
+
   };
 
   return (
