@@ -1,5 +1,6 @@
 $animationDurationSecs: 0.5s;
 $backDropBackground: rgba(23, 23, 26, 0.5);
+$backDropBackgroundAlmostOpaque: rgba(23, 23, 26, 0.9);
 $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
 
 @mixin dialogMaxHeight($height) {
@@ -13,6 +14,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 }
 
+// presented as a drawer
 .drawer {
   width: 100vw;
   max-width: none;
@@ -26,7 +28,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   padding: 0;
 
   &[open] {
-    animation: show $animationDurationSecs ease normal;
+    animation: showDrawer $animationDurationSecs ease normal;
 
     @media (prefers-reduced-motion) {
       animation: none;
@@ -34,7 +36,63 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 
   &::backdrop {
-    animation: backdropShow $animationDurationSecs ease forwards;
+    animation: backdropShowDrawer $animationDurationSecs ease forwards;
+
+    @media (prefers-reduced-motion) {
+      animation: none;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    background: #f3f3f3ff;
+    // build mobile dialog height classes from vars
+    @each $height in $dialogHeights {
+      &.h#{$height} {
+        @include dialogMaxHeight($height);
+      }
+    }
+  }
+
+  &.isClosing.isClosing {
+    animation: hideDrawer $animationDurationSecs ease normal;
+  
+    @media (prefers-reduced-motion) {
+      animation: hideDrawer 1ms; // 1ms allows the `endanimation` event to fire
+    }
+  
+    &::backdrop {
+      animation: backdropHideDrawer $animationDurationSecs ease forwards;
+  
+      @media (prefers-reduced-motion) {
+        animation: none;
+      }
+    }
+  }
+  
+}
+
+// presented as a modal
+.modal {
+  width: min(680px, 100vw);
+  max-width: none;
+  max-height: none;
+  height: clamp(80vh, 60vh, 600px); // Safari needs a height
+  margin: auto;
+  border: none;
+  border-radius: 1rem 1rem 0 0;
+  background: #fff;
+  padding: 0;
+
+  &[open] {
+    animation: showModal $animationDurationSecs ease normal;
+
+    @media (prefers-reduced-motion) {
+      animation: none;
+    }
+  }
+
+  &::backdrop {
+    animation: backdropShowModal $animationDurationSecs ease forwards;
 
     @media (prefers-reduced-motion) {
       animation: none;
@@ -52,23 +110,9 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 }
 
-.isClosing.isClosing {
-  animation: hide $animationDurationSecs ease normal;
 
-  @media (prefers-reduced-motion) {
-    animation: hide 1ms; // 1ms allows the `endanimation` event to fire
-  }
-
-  &::backdrop {
-    animation: backdropHide $animationDurationSecs ease forwards;
-
-    @media (prefers-reduced-motion) {
-      animation: none;
-    }
-  }
-}
-
-@keyframes show {
+// drawer animations
+@keyframes showDrawer {
   from {
     transform: translateY(100%);
     display: none;
@@ -79,7 +123,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 }
 
-@keyframes hide {
+@keyframes hideDrawer {
   from {
     transform: translateY(0%);
     display: block;
@@ -90,7 +134,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 }
 
-@keyframes backdropShow {
+@keyframes backdropShowDrawer {
   from {
     background: none;
   }
@@ -100,7 +144,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
   }
 }
 
-@keyframes backdropHide {
+@keyframes backdropHideDrawer {
   from {
     background: $backDropBackground;
   }
@@ -109,6 +153,51 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
     background: none;
   }
 }
+
+// modal animations
+@keyframes showModal {
+  from {
+    transform: translateY(100%);
+    display: none;
+  }
+  to {
+    transform: translateY(0%);
+    display: block;
+  }
+}
+
+@keyframes hideModal {
+  from {
+    transform: translateY(0%);
+    display: block;
+  }
+  to {
+    transform: translateY(100%);
+    display: none;
+  }
+}
+
+@keyframes backdropShowModal {
+  from {
+    background: none;
+  }
+
+  to {
+    background: $backDropBackgroundAlmostOpaque;
+  }
+}
+
+@keyframes backdropHideModal {
+  from {
+    background: $backDropBackgroundAlmostOpaque;
+  }
+
+  to {
+    background: none;
+  }
+}
+
+
 
 // ----------- Desktop Overrides ---------------
 
@@ -122,8 +211,11 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
     border-radius: 16px 0 0 16px;
     padding: 0;
   }
+  .modal {
+    // @todo
+  }
 
-  @keyframes show {
+  @keyframes showDrawer {
     from {
       transform: translateX(100%);
       display: none;
@@ -134,7 +226,7 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
     }
   }
 
-  @keyframes hide {
+  @keyframes hideDrawer {
     from {
       transform: translateX(0%);
       display: block;
@@ -144,4 +236,5 @@ $dialogHeights: 25, 33, 50, 66, 75, 87, 100;
       display: none;
     }
   }
+
 }

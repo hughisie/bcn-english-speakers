@@ -180,7 +180,7 @@ export default function EventModal({ onClose }: EventModalProps) {
         <div class="flex flex-row items-center justify-center gap-4 py-4 px-6">
           <Button
             onClick={onClose}
-            text="Cancel"
+            text="CANCEL"
             variant="tertiary"
             classes="flex-shrink-0 flex-grow basis-1/2"
           />

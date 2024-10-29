@@ -34,7 +34,7 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
       isOpen={attendModalState.value.isOpen}
       onClose={onClose}
       maxHeightMobile={100}
-      presentationMode="modal"
+      presentationMode="drawer"
     >
       <div class="flex flex-col justify-center gap-2 mb-2">
         <h2 class="mt-4 text-3xl font-semibold tracking-tight">Attend event</h2>
@@ -44,7 +44,7 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
         <div class="flex flex-row items-center justify-center gap-4 py-4 px-6">
           <Button
             onClick={onClose}
-            text="Cancel"
+            text="CANCEL"
             variant="tertiary"
             classes="flex-shrink-0 flex-grow basis-1/2"
           />

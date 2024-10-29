@@ -94,7 +94,10 @@ export default function ModalDrawer({
       ref={dialogRef}
       onClose={onClose}
       onCancel={event => preventClose && event.preventDefault()}
-      class={cn(styles.drawer, { [styles.isClosing]: isClosing }, styles[`h${maxHeightMobile}`])}
+      class={cn(
+        presentationMode === 'drawer' ? styles.drawer : styles.modal,
+        { [styles.isClosing]: isClosing },
+        styles[`h${maxHeightMobile}`])}
     >
       {(isOpen || isClosing) && (
         //  max-h-[calc(100vh-2rem)]
