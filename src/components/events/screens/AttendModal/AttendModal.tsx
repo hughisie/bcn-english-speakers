@@ -1,12 +1,13 @@
-import {
-  eventRSVPStatus,
-  getRsvpButtonLabel,
-  getRSVPOptionsByCertainty,
-} from "../../../../services/events.service";
+import cn from "classnames";
+import { signal } from "@preact/signals";
+import { eventRSVPStatus } from "../../../../services/events.service";
 import Button from "../../components/Button/Button";
 import ModalDrawer from "../../components/ModalDrawer/ModalDrawer";
 import useAppStateContext from "../../contexts/AppStateProvider";
-import FormStepper from './parts/FormStepper';
+import EventDateTime from "../EventModal/parts/EventDateTime";
+import FormStepper from "./parts/FormStepper";
+
+const readMore = signal(false);
 
 type AttendModalProps = {
   /** Close modal without submitting */
@@ -25,20 +26,14 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
     return null;
   }
 
-  const {
-    meetupId,
-    title,
-    description,
-    startTime,
-    endTime,
-    location,
-    rsvpType,
-    eventConfig,
-  } = event;
+  const { meetupId, title, description, location, rsvpType, eventConfig } =
+    event;
 
   // const rsvpButtonLabel = getRsvpButtonLabel(event);
   const rsvpStatus = eventRSVPStatus(event);
-  const handleReadMore = () => {};
+  const handleReadMore = () => {
+    readMore.value = !readMore.value;
+  };
 
   return (
     <ModalDrawer
@@ -56,14 +51,24 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
             dangerouslySetInnerHTML={{
               __html: description,
             }}
-            class="mt-6 prose tracking-tight line-clamp-2 overflow-hidden text-ellipsis"
+            class={cn(
+              "mt-6 prose tracking-tight overflow-hidden text-ellipsis",
+              !readMore.value ? "line-clamp-2" : "max-h-48 overflow-y-auto"
+            )}
           />
-          
-          <p class="text-right mt-0">
-            <button type="button" onClick={handleReadMore}>
-              read more
-            </button>
-          </p>
+
+          {readMore.value === false && (
+            <p class="text-right mt-0">
+              <button type="button" onClick={handleReadMore} class="text-sky-700">
+                show all...
+              </button>
+            </p>
+          )}
+        </div>
+
+        <div class="border-b border-gray-900/10 pb-6 mt-6">
+          <h2 class="text-xl/7 font-semibold text-gray-900 mb-4">Date/time</h2>
+          <EventDateTime event={event} />
         </div>
 
         <FormStepper />
