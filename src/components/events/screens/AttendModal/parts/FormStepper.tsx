@@ -85,6 +85,23 @@ export default function FormStepper() {
   };
 
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  const handleSurnameChange = (ev: any) => {
+    const { value } = ev.target as HTMLInputElement;
+    if (!value) {
+      return;
+    }
+    const newRsvps = [...localFormState.value.rsvps];
+    newRsvps[0] = {
+      ...newRsvps[0],
+      lastname: value,
+    };
+    localFormState.value = {
+      ...localFormState.value,
+      rsvps: newRsvps,
+    };
+  };
+
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   const handleMobileNumberChange = (ev: any) => {
     const { value } = ev.target as HTMLInputElement;
     if (!value) {
@@ -126,6 +143,7 @@ export default function FormStepper() {
                 <input
                   name="rsvpOption"
                   type="radio"
+                  required
                   value={option}
                   id={optionId}
                   onClick={handleRadioClick}
@@ -192,7 +210,7 @@ export default function FormStepper() {
           <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div class="sm:col-span-3">
               <label
-                for="first-name"
+                for="firstname"
                 class="block text-sm/6 font-medium text-gray-900"
               >
                 First name
@@ -200,8 +218,12 @@ export default function FormStepper() {
               <div class="mt-2">
                 <input
                   type="text"
-                  name="first-name"
-                  id="first-name"
+                  name="rsvpName"
+                  value={localFormState.value.rsvps[0]?.name}
+                  id="firstname"
+                  placeholder="Your name"
+                  required
+                  onChange={handleNameChange}
                   autocomplete="given-name"
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                 />
@@ -210,7 +232,7 @@ export default function FormStepper() {
 
             <div class="sm:col-span-3">
               <label
-                for="last-name"
+                for="lastname"
                 class="block text-sm/6 font-medium text-gray-900"
               >
                 Last name (or initial)
@@ -218,11 +240,58 @@ export default function FormStepper() {
               <div class="mt-2">
                 <input
                   type="text"
-                  name="last-name"
-                  id="last-name"
+                  name="lastname"
+                  id="lastname"
+                  placeholder="Last name"
+                  onChange={handleSurnameChange}
                   autocomplete="family-name"
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                 />
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <label
+                for="mobile"
+                class="block text-sm/6 font-medium text-gray-900"
+              >
+                Mobile number
+              </label>
+              <div class="mt-2">
+                <input
+                  type="text"
+                  name="mobile"
+                  id="mobile"
+                  placeholder="Mobile"
+                  // onChange={handleSurnameChange}
+                  autocomplete=""
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                />
+              </div>
+            </div>
+
+            <div class="sm:col-span-3">
+              <label
+                for="avatar"
+                class="block text-sm/6 font-medium text-gray-900"
+              >
+                Avatar (optional)
+              </label>
+              <div class="mt-2">
+                <select
+                  name="rsvpAvatar"
+                  id="rsvpAvatar"
+                  value={localFormState.value.rsvps[0]?.avatar}
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm/6"
+                >
+                  {avatarsList.map((emoji, key) => {
+                    return (
+                      <option key={emoji} value={emoji}>
+                        {emoji}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             </div>
 
@@ -282,13 +351,9 @@ export default function FormStepper() {
                 />
               </div>
             </div> */}
-
-            
-
-            
           </div>
 
-          <div class="flex flex-col">
+          {/* <div class="flex flex-col">
             <div class="py-4 px-6 flex flex-col gap-1">
               <label
                 htmlFor="firstname"
@@ -347,7 +412,7 @@ export default function FormStepper() {
                 })}
               </select>
             </div>
-          </div>
+          </div> */}
         </div>
       </Step>
 
