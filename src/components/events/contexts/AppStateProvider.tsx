@@ -156,6 +156,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
     if (typeof window.localStorage === "undefined") return { ...initialState };
     const value = window.localStorage.getItem(LOCAL_STORAGE_KEYS.APP_STATE);
     if (value === null) return { ...initialState };
+    // @todo - validate with Zod to prevent tampering?
     return JSON.parse(value);
   };
 

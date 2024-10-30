@@ -5,6 +5,7 @@ import {
   RsvpButtonCtaDefault,
   type MeetupGroupItem,
   type MeetupItem,
+  type MeetupRsvpCertainty,
   type RsvpButtonCtaTypes,
 } from "../types/types";
 
@@ -249,3 +250,67 @@ export const getEventAttendeesCriteria = ({
   };
 };
 
+export const getRSVPOptionsByCertainty = (
+  type: MeetupRsvpCertainty
+): MeetupRsvpAttendanceStatusEnum[] => {
+  if (type === "INDEFINITE") {
+    return [
+      MeetupRsvpAttendanceStatusEnum.Coming,
+      MeetupRsvpAttendanceStatusEnum.Maybe,
+      MeetupRsvpAttendanceStatusEnum.Cannot,
+    ];
+  }
+  return [
+    MeetupRsvpAttendanceStatusEnum.Coming,
+    MeetupRsvpAttendanceStatusEnum.Cannot,
+  ];
+};
+
+export const getRsvpOptionLabel = (
+  option: MeetupRsvpAttendanceStatusEnum
+): string => {
+  switch (option) {
+    case MeetupRsvpAttendanceStatusEnum.Coming:
+      return "😃 I will be there";
+    case MeetupRsvpAttendanceStatusEnum.Maybe:
+      return "🤔 I might be there";
+    case MeetupRsvpAttendanceStatusEnum.Cannot:
+      return "😢 I cannot make it";
+    default:
+      return "Unknown";
+  }
+};
+
+export const getRsvpEmojiList = (): string[] => {
+  return [
+    "👤",
+    "🧔‍♂️",
+    "👩‍🦳",
+    "👩‍🎤",
+    "👩‍🌾",
+    "👷‍♀️",
+    "🧕",
+    "🕵️‍♂️",
+    "👩‍🍳",
+    "👨‍💻",
+    "🧑‍🎨",
+    "🫅",
+    "🦹",
+    "🧟‍♀️",
+    "🧙‍♀️",
+    "🧛‍♀️",
+    "🧚‍♀️",
+    "🙋‍♂️",
+    "🧖",
+    "💃",
+    "🕺",
+    "💇‍♂️",
+    "🧜",
+    "🥷",
+    "🧑‍🚀",
+    "🧑‍🚒",
+    "🧑‍✈️",
+    "🧑‍🎓",
+    "👩",
+  ];
+};

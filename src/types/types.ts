@@ -126,7 +126,8 @@ export type RsvpButtonCtaTypes =
   | "ATTEND"
   | "GOING"
   | "CONFIRM"
-  | "REGISTER";
+  | "REGISTER"
+  | "RESPOND";
 export const RsvpButtonCtaDefault = "ATTEND" satisfies RsvpButtonCtaTypes;
 export type MeetupRsvpCertainty = "DEFINITE" | "INDEFINITE";
 export type MeetupPrivacy = 1 | 2 | 3;
@@ -346,3 +347,4 @@ export type MeetupGroupItem = {
   /** Tag-like list of topics and themes that the group is concerned with, such as: meetups, foreigners in BCN, english speaking, etc */
   topics: string[];
 };
+
