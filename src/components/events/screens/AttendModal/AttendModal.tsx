@@ -58,7 +58,6 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
             }}
             class="mt-6 prose tracking-tight line-clamp-2 overflow-hidden text-ellipsis"
           />
-          Google maps link Date time info Radio options Going/Not Going/Maybe
           
           <p class="text-right mt-0">
             <button type="button" onClick={handleReadMore}>

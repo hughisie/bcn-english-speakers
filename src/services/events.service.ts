@@ -271,11 +271,11 @@ export const getRsvpOptionLabel = (
 ): string => {
   switch (option) {
     case MeetupRsvpAttendanceStatusEnum.Coming:
-      return "😃 I will be there";
+      return "I will be there 😃 ";
     case MeetupRsvpAttendanceStatusEnum.Maybe:
-      return "🤔 I might be there";
+      return "I might be there 🤔 ";
     case MeetupRsvpAttendanceStatusEnum.Cannot:
-      return "😢 I cannot make it";
+      return "I cannot make it 😢 ";
     default:
       return "Unknown";
   }
