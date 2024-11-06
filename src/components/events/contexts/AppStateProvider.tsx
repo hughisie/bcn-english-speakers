@@ -1,10 +1,10 @@
 import { createContext, type ComponentChildren } from "preact";
 import { useContext } from "preact/hooks";
-import { effect, signal, type Signal } from "@preact/signals";
+import { computed, effect, signal, type Signal } from "@preact/signals";
 import { initialState, type AppState } from "../state/state";
-import type { ScreensType } from "../types/types";
-import type { MeetupItem } from "../../../types/types";
+import type { MeetupItem, ScreensType } from "../types/types";
 import { LOCAL_STORAGE_KEYS } from "../types/config";
+import { buildRsvpPayload, submitRsvp, type SubmitRsvpPayloadResponse } from '../services/meetup.service';
 
 function createAppState(appState: AppState) {
   const restartApp = () => {
@@ -62,11 +62,41 @@ function createAppState(appState: AppState) {
   const setAttendModalState = (newState: AppState["attendModalState"]) => {
     attendModalState.value = { ...newState };
   };
+  const attendModalCanSubmitForm = computed(() => {
+    // make sure at least 1 guest
+    // make sure coming/maybe/not coming matches ENUM
+    // make sure all name fields and avatars are provided
+    // extra: make sure last name, email, mobile are provided if meetup config asks for it
+    // make sure no bad words: https://www.npmjs.com/package/bad-words
+    const allNamesFilled = attendModalState.value.formData.guests.every(i => !!i.name);
+    return allNamesFilled && attendModalState.value.formData.guests.length > 0;
+  });
+
   const handleCloseAttendModal = () => {
     setAttendModalState({
       ...attendModalState.value,
       isOpen: false,
     });
+  };
+
+  const handleSubmitRsvp = async () => {
+    if (!currentEvent.value?.meetupId) {
+      return 
+    }
+    const payload = buildRsvpPayload(attendModalState.value.formData.guests, currentEvent.value?.meetupId)
+    submitRsvp(payload)
+      .then((resp: SubmitRsvpPayloadResponse) => {
+        // CORRECT
+        
+      })
+      .catch((resp: SubmitRsvpPayloadResponse) => {
+        // INCORRECT
+
+        
+        // setTimeout(() => {
+        
+        // }, 500);
+      });
   };
 
   const addToStorage = (newState: AppState) => {
@@ -104,6 +134,8 @@ function createAppState(appState: AppState) {
     setModalState,
     attendModalState,
     setAttendModalState,
+    attendModalCanSubmitForm,
+
     currentEvent,
     setCurrentEvent,
 
@@ -117,6 +149,7 @@ function createAppState(appState: AppState) {
 
     handleCloseModals,
     handleCloseAttendModal,
+    handleSubmitRsvp,
     restartApp,
   };
 }
@@ -130,6 +163,7 @@ type Api = {
   setModalState: (newState: AppState["modalState"]) => void;
   attendModalState: Signal<AppState["attendModalState"]>;
   setAttendModalState: (newState: AppState["attendModalState"]) => void;
+  attendModalCanSubmitForm: Signal<boolean>;
 
   handleShowEventModal: (newEvent: MeetupItem) => void;
   handleShowAttendModal: (newEvent: MeetupItem) => void;
@@ -140,6 +174,7 @@ type Api = {
   setMeetups: (newMeetups: AppState["meetups"]) => void;
   handleCloseModals: () => void;
   handleCloseAttendModal: () => void;
+  handleSubmitRsvp: () => void;
   restartApp: () => void;
 };
 
@@ -169,6 +204,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
     setModalState,
     attendModalState,
     setAttendModalState,
+    attendModalCanSubmitForm,
     currentEvent,
     setCurrentEvent,
     group,
@@ -180,6 +216,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
     handleCloseAttendModal,
     handleShowEventModal,
     handleShowAttendModal,
+    handleSubmitRsvp,
     restartApp,
   } = createAppState(storedAppState);
   return (
@@ -194,6 +231,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
           setModalState,
           attendModalState,
           setAttendModalState,
+          attendModalCanSubmitForm,
           group,
           setGroup,
           meetups,
@@ -203,6 +241,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
           handleShowAttendModal,
           handleCloseModals,
           handleCloseAttendModal,
+          handleSubmitRsvp,
 
           restartApp,
         },

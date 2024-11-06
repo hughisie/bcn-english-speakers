@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import { getEventFromToDate, getLocationInfo } from '../../../../services/events.service';
-import type { GenericMediaItem, MeetupGroupItem, MeetupItem } from "../../../../types/types";
 import { getFeaturedMediaItem } from "../../utils/utils";
+import type { GenericMediaItem, MeetupGroupItem, MeetupItem } from '../../types/types';
 
 const eventPlaceholderImage: GenericMediaItem = {
   id: "generic-item",

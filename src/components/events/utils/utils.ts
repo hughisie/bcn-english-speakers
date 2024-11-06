@@ -1,4 +1,4 @@
-import type { GenericMediaItem } from "../../../types/types";
+import type { GenericMediaItem } from '../types/types';
 
 export const DEFAULT_LOCALE = "es-ES";
 

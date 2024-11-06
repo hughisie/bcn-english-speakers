@@ -1,4 +1,4 @@
-import type { GenericMediaItem } from '../../../types/types';
+import type { GenericMediaItem } from './types';
 
 export const LOCAL_STORAGE_KEYS = {
   APP_STATE: "appState",

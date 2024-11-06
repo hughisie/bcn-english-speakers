@@ -1,6 +1,5 @@
-import type { Signal } from "@preact/signals";
-import type { MeetupGroupItem, MeetupItem } from "../../../../../types/types";
 import { RiAccountCircleFill } from "../../../components/Icons/Icons";
+import type { MeetupGroupItem, MeetupItem } from '../../../types/types';
 
 type EventHostsProps = {
   event: MeetupItem;

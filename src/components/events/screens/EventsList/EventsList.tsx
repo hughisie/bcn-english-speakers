@@ -1,11 +1,10 @@
-import type { Signal } from "@preact/signals";
 import EventItem from "./EventItem";
 import SkeletonShape from "../../components/Skeleton/SkeletonShape";
 import SkeletonText from "../../components/Skeleton/SkeletonText";
-import type { MeetupGroupItem, MeetupItem } from "../../../../types/types";
 import EventModal from "../EventModal/EventModal";
 import useAppStateContext from "../../contexts/AppStateProvider";
 import AttendModal from "../AttendModal/AttendModal";
+import type { MeetupGroupItem, MeetupItem } from '../../types/types';
 
 type EventsListProps = {
   meetups: MeetupItem[];
@@ -18,7 +17,7 @@ export default function EventsList({
   viewEvent,
 }: EventsListProps) {
   const {
-    api: { handleCloseModals, handleCloseAttendModal },
+    api: { handleCloseModals, handleCloseAttendModal, handleSubmitRsvp },
   } = useAppStateContext();
 
   if (!meetups || !group) {
@@ -30,8 +29,6 @@ export default function EventsList({
       </div>
     );
   }
-
-  const handleOnSignup = () => {};
 
   return (
     <div class="py-6 px-4 mt-4">
@@ -46,7 +43,7 @@ export default function EventsList({
         />
       ))}
       <EventModal onClose={handleCloseModals} />
-      <AttendModal onClose={handleCloseAttendModal} onSignup={handleOnSignup} />
+      <AttendModal onClose={handleCloseAttendModal} onSignup={handleSubmitRsvp} />
     </div>
   );
 }

@@ -1,43 +1,19 @@
 import cn from "classnames";
-import { signal } from "@preact/signals";
-import type { MeetupRsvpAttendanceStatusEnum } from "../../../../../types/types";
 import useAppStateContext from "../../../contexts/AppStateProvider";
 import {
   getRsvpEmojiList,
   getRsvpOptionLabel,
   getRSVPOptionsByCertainty,
 } from "../../../../../services/events.service";
-import Step from './Step';
-
-type ResponseItem = {
-  name: string;
-  mobile: string;
-  avatar: string;
-  lastname?: string;
-  email?: string;
-  barrio?: number;
-  response: MeetupRsvpAttendanceStatusEnum | undefined;
-  comment?: string;
-};
-
-type ResponseFormState = {
-  /** Zero-indexed step */
-  currentStep: number;
-  meetupId: string;
-  response: MeetupRsvpAttendanceStatusEnum | undefined;
-  rsvps: ResponseItem[];
-};
-
-const localFormState = signal<ResponseFormState>({
-  currentStep: 0,
-  meetupId: "",
-  response: undefined,
-  rsvps: [],
-});
+import Step from "./Step";
+import type {
+  AttendFormState,
+  GuestItem,
+} from "../../../services/meetup.service";
 
 export default function FormStepper() {
   const {
-    api: { attendModalState, currentEvent, group },
+    api: { currentEvent, group, attendModalState, setAttendModalState },
   } = useAppStateContext();
 
   const event = currentEvent.value;
@@ -48,77 +24,44 @@ export default function FormStepper() {
   }
 
   const { meetupId, rsvpType, eventConfig } = event;
-
   const responseOptions = getRSVPOptionsByCertainty(rsvpType);
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const handleRadioClick = (ev: any) => {
+  const handleRadioClick = (ev: Event) => {
     const { value } = ev.target as HTMLInputElement;
     if (!value) {
       return;
     }
     const parsedValue = Number.parseInt(value, 10);
-    if (localFormState.value.response === parsedValue) return;
-    localFormState.value = {
-      ...localFormState.value,
-      response: parsedValue,
-      meetupId,
-      // currentStep: localFormState.value.currentStep + 1,
+    if (attendModalState.value.formData.isAttending === parsedValue) return;
+    attendModalState.value = {
+      ...attendModalState.value,
+      formData: {
+        ...attendModalState.value.formData,
+        isAttending: parsedValue,
+      },
+      // currentStep: attendModalState.value.currentStep + 1,
     };
   };
 
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const handleNameChange = (ev: any) => {
-    const { value } = ev.target as HTMLInputElement;
-    if (!value) {
-      return;
-    }
-    const newRsvps = [...localFormState.value.rsvps];
+  const handleFieldChange = (ev: Event, fieldName: keyof GuestItem) => {
+    let { value } = ev.target as HTMLInputElement;
+    value = value.trim();
+    const newRsvps = [...attendModalState.value.formData.guests];
     newRsvps[0] = {
       ...newRsvps[0],
-      name: value,
+      [fieldName]: value,
     };
-    localFormState.value = {
-      ...localFormState.value,
-      rsvps: newRsvps,
-    };
-  };
-
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const handleSurnameChange = (ev: any) => {
-    const { value } = ev.target as HTMLInputElement;
-    if (!value) {
-      return;
-    }
-    const newRsvps = [...localFormState.value.rsvps];
-    newRsvps[0] = {
-      ...newRsvps[0],
-      lastname: value,
-    };
-    localFormState.value = {
-      ...localFormState.value,
-      rsvps: newRsvps,
-    };
-  };
-
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  const handleMobileNumberChange = (ev: any) => {
-    const { value } = ev.target as HTMLInputElement;
-    if (!value) {
-      return;
-    }
-    const newRsvps = [...localFormState.value.rsvps];
-    newRsvps[0] = {
-      ...newRsvps[0],
-      mobile: value,
-    };
-    localFormState.value = {
-      ...localFormState.value,
-      rsvps: newRsvps,
+    attendModalState.value = {
+      ...attendModalState.value,
+      formData: {
+        ...attendModalState.value.formData,
+        guests: newRsvps,
+      },
     };
   };
 
   const avatarsList = getRsvpEmojiList();
+  const { formData, currentStep } = attendModalState.value;
 
   return (
     <div>
@@ -133,12 +76,7 @@ export default function FormStepper() {
           {responseOptions.map((option) => {
             const optionId = `option_${option}`;
             return (
-              <div
-                key={optionId}
-                class={cn(
-                  "flex items-center gap-x-3"
-                )}
-              >
+              <div key={optionId} class={cn("flex items-center gap-x-3")}>
                 <input
                   name="rsvpOption"
                   type="radio"
@@ -164,9 +102,10 @@ export default function FormStepper() {
         stepTitle="Personal Information"
         stepDescription="Please tell us who you are."
         stepIndex={1}
-        currentStep={localFormState.value.currentStep}
+        currentStep={currentStep}
       >
         <div class="space-y-6">
+          <h2 class="text-base">Guest 1 - Main</h2>
           <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div class="sm:col-span-3">
               <label
@@ -179,11 +118,11 @@ export default function FormStepper() {
                 <input
                   type="text"
                   name="rsvpName"
-                  value={localFormState.value.rsvps[0]?.name}
+                  value={formData.guests[0]?.name}
                   id="firstname"
                   placeholder="Your name"
                   required
-                  onChange={handleNameChange}
+                  onChange={(e) => handleFieldChange(e, "name")}
                   autocomplete="given-name"
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                 />
@@ -203,7 +142,7 @@ export default function FormStepper() {
                   name="lastname"
                   id="lastname"
                   placeholder="Last name"
-                  onChange={handleSurnameChange}
+                  onChange={(e) => handleFieldChange(e, "lastname")}
                   autocomplete="family-name"
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                 />
@@ -223,7 +162,7 @@ export default function FormStepper() {
                   name="mobile"
                   id="mobile"
                   placeholder="Mobile"
-                  // onChange={handleSurnameChange}
+                  onChange={(e) => handleFieldChange(e, "mobile")}
                   autocomplete=""
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                 />
@@ -241,7 +180,8 @@ export default function FormStepper() {
                 <select
                   name="rsvpAvatar"
                   id="rsvpAvatar"
-                  value={localFormState.value.rsvps[0]?.avatar}
+                  onChange={(e) => handleFieldChange(e, "avatar")}
+                  value={formData.guests[0]?.avatar}
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm/6"
                 >
                   {avatarsList.map((emoji, key) => {
@@ -259,18 +199,18 @@ export default function FormStepper() {
       </Step>
 
       <div>
-        {localFormState.value.rsvps.length > 0 && (
+        {formData.guests.length > 0 && (
           <div class="flex flex-col gap-2">
-            <p>Step: {localFormState.value.currentStep}</p>
-            <p>Response: {localFormState.value.response}</p>
-            <p>Step: {localFormState.value.meetupId}</p>
+            <h2>Guests:</h2>
 
-            {localFormState.value.rsvps.map((rsvp, index) => {
+            {formData.guests.map((rsvp, index) => {
               return (
                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                <div class="flex flex-row gap-2" key={index}>
+                <div class="flex flex-row gap-1" key={index}>
                   <div>{rsvp.avatar}</div>
-                  <div>{rsvp.name}</div>
+                  <div>Name: {rsvp.name}</div>
+                  <div>Surname: {rsvp.lastname || '-'}</div>
+                  <div>Mobile: {rsvp.mobile || '-'}</div>
                 </div>
               );
             })}
@@ -280,4 +220,3 @@ export default function FormStepper() {
     </div>
   );
 }
-

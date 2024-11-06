@@ -16,7 +16,7 @@ type AttendModalProps = {
 };
 export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
   const {
-    api: { attendModalState, currentEvent, group },
+    api: { attendModalState, currentEvent, group, attendModalCanSubmitForm },
   } = useAppStateContext();
 
   const event = currentEvent.value;
@@ -38,10 +38,11 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
   return (
     <ModalDrawer
       title="Attend event"
-      isOpen={attendModalState.value.isOpen}
+      isOpen={attendModalState.value?.isOpen ?? false}
       onClose={onClose}
       maxHeightMobile={100}
       presentationMode="drawer"
+      preventClose
     >
       <div class="flex flex-col justify-center gap-2 mb-2">
         <h2 class="mt-4 text-3xl font-semibold tracking-tight">{title}</h2>
@@ -52,7 +53,7 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
               __html: description,
             }}
             class={cn(
-              "mt-6 prose tracking-tight overflow-hidden text-ellipsis",
+              "mt-6 prose tracking-tight overflow-hidden text-ellipsis pr-1",
               !readMore.value ? "line-clamp-2" : "max-h-48 overflow-y-auto"
             )}
           />
@@ -77,6 +78,7 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
         <div class="flex flex-row items-center justify-center gap-4 py-4 px-6">
           <Button
             onClick={onClose}
+            type='reset'
             text="CANCEL"
             variant="tertiary"
             classes="flex-shrink-0 flex-grow basis-1/2"
@@ -87,7 +89,7 @@ export default function AttendModal({ onClose, onSignup }: AttendModalProps) {
             // text={rsvpButtonLabel}
             variant="primary"
             classes="flex-shrink-0 flex-grow basis-1/2"
-            disabled={!rsvpStatus.isAcceptingRSVPs}
+            disabled={!rsvpStatus.isAcceptingRSVPs || !attendModalCanSubmitForm.value}
           />
         </div>
         {!rsvpStatus.isAcceptingRSVPs && (

@@ -27,7 +27,7 @@ export default function Step({
       <div class="p-4 py-6 bg-slate-100 border border-slate-200 rounded-md space-y-10">
         <fieldset class="text-xl mb-2 font-semibold tracking-tight">
           {fieldsetTitle && (
-            <legend class="text-sm/6 font-normal text-gray-600 mb-4">
+            <legend class="text-base/6 font-semibold mb-4">
               {fieldsetTitle}
             </legend>
           )}

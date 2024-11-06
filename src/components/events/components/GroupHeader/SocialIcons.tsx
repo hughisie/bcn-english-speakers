@@ -1,4 +1,4 @@
-import type { MeetupGroupItem } from "../../../../types/types";
+import type { MeetupGroupItem } from '../../types/types';
 import { RiFacebookBoxFill, RiInstagramLine, RiLinkedinFill, RiTelegram2Fill, RiTiktokFill, RiTwitterXFill, RiLink, RiWhatsappLine, RiYoutubeLine } from '../Icons/Icons';
 
 type SocialIconsProps = {

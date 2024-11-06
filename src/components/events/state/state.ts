@@ -1,5 +1,6 @@
 import { API_CALL_REFRESH_PERIOD } from "../../../services/events.service";
-import type { MeetupGroupItem, MeetupItem } from "../../../types/types";
+import type { GuestItem } from '../services/meetup.service';
+import { MeetupRsvpAttendanceStatusEnum, type MeetupGroupItem, type MeetupItem } from '../types/types';
 
 export const initialState: AppState = {
   currentScreen: "HOME",
@@ -17,7 +18,11 @@ export const initialState: AppState = {
   },
   attendModalState: {
     isOpen: false,
-    formData: [],
+    formData: {
+      guests: [],
+      isAttending: MeetupRsvpAttendanceStatusEnum.Cannot,
+    },
+    currentStep: 0,
   },
 };
 
@@ -32,9 +37,13 @@ export type AppState = {
   };
   /** Attend modal can show over the top of other modals */
   attendModalState: {
+    /** Zero-indexed step */
+    currentStep: number;
     isOpen: boolean;
-    // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    formData: any[]; // an array of RSVP info for people signing up
+    formData: {
+      guests: GuestItem[]; // an array of RSVP info for people signing up
+      isAttending: MeetupRsvpAttendanceStatusEnum;
+    }
   };
 };
 

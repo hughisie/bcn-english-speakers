@@ -15,6 +15,7 @@ import EventHosts from "./parts/EventHosts";
 import EventLocation from "./parts/EventLocation";
 import EventHeading from "./parts/EventHeading";
 import EventRegistration from "./parts/EventRegistration";
+import { MeetupRsvpAttendanceStatusEnum } from '../../types/types';
 
 type EventModalProps = {
   onClose: () => void;
@@ -81,7 +82,11 @@ export default function EventModal({ onClose }: EventModalProps) {
   const handleRSVP = () => {
     setAttendModalState({
       isOpen: true,
-      formData: [],
+      formData: {
+        guests: [],
+        isAttending: MeetupRsvpAttendanceStatusEnum.Cannot,
+      },
+      currentStep: 0,
     });
     // onClose();
     // // wait for modal to close...
