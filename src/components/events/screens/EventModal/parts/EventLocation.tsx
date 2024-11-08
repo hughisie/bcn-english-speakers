@@ -1,6 +1,6 @@
-import { meetupLocationIsDisclosedYet } from "../../../../../services/events.service";
 import { RiInformation2Line } from "../../../components/Icons/Icons";
 import type { MeetupItem } from '../../../types/types';
+import { meetupLocationIsDisclosedYet } from '../../../utils/utils';
 
 type EventLocationProps = {
   event: MeetupItem;

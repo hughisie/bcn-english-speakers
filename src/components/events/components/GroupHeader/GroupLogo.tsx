@@ -1,4 +1,4 @@
-import type { GenericMediaItem } from "../../../../types/types";
+import type { GenericMediaItem } from '../../types/types';
 
 type GroupLogoProps = {
   logo: GenericMediaItem;

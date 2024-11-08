@@ -3,7 +3,7 @@ import { useContext } from "preact/hooks";
 import { computed, effect, signal, type Signal } from "@preact/signals";
 import { initialState, type AppState } from "../state/state";
 import type { MeetupItem, ScreensType } from "../types/types";
-import { LOCAL_STORAGE_KEYS } from "../types/config";
+import { LOCAL_STORAGE_KEYS } from "../config/config";
 import {
   buildRsvpPayload,
   submitRsvp,
@@ -160,7 +160,7 @@ function createAppState(appState: AppState) {
   };
 }
 
-type Api = {
+export type Api = {
   currentScreen: Signal<string>;
   setCurrentScreen: (newScreen: ScreensType) => void;
   currentEvent: Signal<AppState["currentEvent"]>;

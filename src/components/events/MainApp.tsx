@@ -3,11 +3,7 @@ import GroupHeader from "./components/GroupHeader/GroupHeader";
 import type { MeetupItem } from './types/types';
 import useAppStateContext from "./contexts/AppStateProvider";
 import EventsList from "./screens/EventsList/EventsList";
-import {
-  getEventsByOrganiserId,
-  getGroupInfo,
-  hasUpdatedRecently,
-} from "../../services/events.service";
+import { getEventsByOrganiserId, getGroupInfo, hasUpdatedRecently } from './services/meetup.service';
 
 export default function MainApp() {
   console.log("Rendering MainApp.tsx");
@@ -39,12 +35,16 @@ export default function MainApp() {
     const p1 = getGroupInfo;
     const p2 = getEventsByOrganiserId;
     (async () => {
+      
+      // @todo - try-catch here if fails getting group info
       const groupInfo = await p1();
+
       if (!groupInfo || !groupInfo.data) {
         throw new Error("Failed to fetch group");
       }
       setGroup(groupInfo);
 
+      // @todo - try-catch here if fails getting events
       const meetups = await p2();
       setMeetups(meetups);
     })();

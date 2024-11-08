@@ -1,10 +1,9 @@
-import { getFeaturedMediaItem } from "../../utils/utils";
+import { getFeaturedMediaItem, PLACEHOLDER_HERO } from "../../utils/utils";
 import GroupLogo from "./GroupLogo";
 import HeroImage from "../HeroImage/HeroImage";
 import SocialIcons from "./SocialIcons";
 import SkeletonShape from "../Skeleton/SkeletonShape";
 import { RiAwardFill, RiMapPin2Line } from "../Icons/Icons";
-import { PLACEHOLDER_HERO } from '../../types/config';
 import type { MeetupGroupItem } from '../../types/types';
 
 type GroupHeaderProps = {

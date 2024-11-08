@@ -1,15 +1,11 @@
 import cn from "classnames";
 import useAppStateContext from "../../../contexts/AppStateProvider";
-import {
-  getRsvpEmojiList,
-  getRsvpOptionLabel,
-  getRSVPOptionsByCertainty,
-} from "../../../../../services/events.service";
 import Step from "./Step";
 import type {
   AttendFormState,
   GuestItem,
 } from "../../../services/meetup.service";
+import { getRsvpEmojiList, getRsvpOptionLabel, getRSVPOptionsByCertainty } from '../../../utils/utils';
 
 export default function FormStepper() {
   const {

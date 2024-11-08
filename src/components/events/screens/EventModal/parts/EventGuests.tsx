@@ -1,6 +1,6 @@
 import { RiAccountCircleFill } from "../../../components/Icons/Icons";
-import { getGuestList } from '../../../services/meetup.service';
 import { MeetupRsvpAttendanceStatusEnum, type MeetupGroupItem, type MeetupItem } from '../../../types/types';
+import { getGuestList } from '../../../utils/utils';
 
 type EventGuestsProps = {
   event: MeetupItem;

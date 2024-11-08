@@ -1,6 +1,5 @@
 import cn from 'classnames'
-import { getEventFromToDate, getLocationInfo } from '../../../../services/events.service';
-import { getFeaturedMediaItem } from "../../utils/utils";
+import { getEventFromToDate, getFeaturedMediaItem, getLocationInfo } from "../../utils/utils";
 import type { GenericMediaItem, MeetupGroupItem, MeetupItem } from '../../types/types';
 
 const eventPlaceholderImage: GenericMediaItem = {

@@ -1,5 +1,4 @@
-import { API_CALL_REFRESH_PERIOD } from "../../../services/events.service";
-import type { GuestItem } from '../services/meetup.service';
+import { API_CALL_REFRESH_PERIOD, type GuestItem } from '../services/meetup.service';
 import { MeetupRsvpAttendanceStatusEnum, type MeetupGroupItem, type MeetupItem } from '../types/types';
 
 export const initialState: AppState = {

@@ -1,11 +1,11 @@
 import cn from "classnames";
 import { signal } from "@preact/signals";
-import { eventRSVPStatus } from "../../../../services/events.service";
 import Button from "../../components/Button/Button";
 import ModalDrawer from "../../components/ModalDrawer/ModalDrawer";
 import useAppStateContext from "../../contexts/AppStateProvider";
 import EventDateTime from "../EventModal/parts/EventDateTime";
 import FormStepper from "./parts/FormStepper";
+import { eventRSVPStatus } from '../../utils/utils';
 
 const readMore = signal(false);
 

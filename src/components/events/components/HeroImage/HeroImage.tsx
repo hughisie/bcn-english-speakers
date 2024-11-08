@@ -1,5 +1,5 @@
 import cn from "classnames";
-import type { GenericMediaItem } from "../../../../types/types";
+import type { GenericMediaItem } from '../../types/types';
 
 type HeroImageProps = {
   image: GenericMediaItem;

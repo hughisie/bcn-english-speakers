@@ -1,12 +1,6 @@
-import {
-  eventPriceIsFree,
-  eventPriceIsTBC,
-  eventRSVPStatus,
-  getEventAttendeesCriteria,
-  getPaymentSchemeReadout,
-} from "../../../../../services/events.service";
 import type { MeetupItem } from "../../../types/types";
 import { PriceFormatter } from "../../../utils/priceFormatter";
+import { eventPriceIsFree, eventPriceIsTBC, eventRSVPStatus, getEventAttendeesCriteria, getPaymentSchemeReadout } from '../../../utils/utils';
 
 type EventRegistrationProps = {
   event: MeetupItem;
