@@ -348,3 +348,15 @@ export const getEventDateReadout = (
     time: `${timeStrStart.toUpperCase()} - ${timeStrEnd.toUpperCase()}`,
   };
 };
+
+export const getMeetupMapLink = (event: MeetupItem) => {
+  const {location} = event;
+  if (location.mapsLink) {
+    return location.mapsLink;
+  }
+  if (!location.lat || !location.lng) {
+    return '';
+  }
+  return `https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lng}`;
+  
+};
