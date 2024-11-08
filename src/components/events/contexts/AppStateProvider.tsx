@@ -4,7 +4,11 @@ import { computed, effect, signal, type Signal } from "@preact/signals";
 import { initialState, type AppState } from "../state/state";
 import type { MeetupItem, ScreensType } from "../types/types";
 import { LOCAL_STORAGE_KEYS } from "../types/config";
-import { buildRsvpPayload, submitRsvp, type SubmitRsvpPayloadResponse } from '../services/meetup.service';
+import {
+  buildRsvpPayload,
+  submitRsvp,
+  type SubmitRsvpPayloadResponse,
+} from "../services/meetup.service";
 
 function createAppState(appState: AppState) {
   const restartApp = () => {
@@ -57,7 +61,7 @@ function createAppState(appState: AppState) {
       openId: undefined,
     });
   };
-  
+
   const attendModalState = signal(appState.attendModalState);
   const setAttendModalState = (newState: AppState["attendModalState"]) => {
     attendModalState.value = { ...newState };
@@ -68,7 +72,9 @@ function createAppState(appState: AppState) {
     // make sure all name fields and avatars are provided
     // extra: make sure last name, email, mobile are provided if meetup config asks for it
     // make sure no bad words: https://www.npmjs.com/package/bad-words
-    const allNamesFilled = attendModalState.value.formData.guests.every(i => !!i.name);
+    const allNamesFilled = attendModalState.value.formData.guests.every(
+      (i) => !!i.name
+    );
     return allNamesFilled && attendModalState.value.formData.guests.length > 0;
   });
 
@@ -81,20 +87,20 @@ function createAppState(appState: AppState) {
 
   const handleSubmitRsvp = async () => {
     if (!currentEvent.value?.meetupId) {
-      return 
+      return;
     }
-    const payload = buildRsvpPayload(attendModalState.value.formData.guests, currentEvent.value?.meetupId)
+    const payload = buildRsvpPayload(
+      attendModalState.value.formData.isAttending,
+      attendModalState.value.formData.guests,
+      currentEvent.value?.meetupId
+    );
     submitRsvp(payload)
       .then((resp: SubmitRsvpPayloadResponse) => {
         // CORRECT
-        
       })
       .catch((resp: SubmitRsvpPayloadResponse) => {
         // INCORRECT
-
-        
         // setTimeout(() => {
-        
         // }, 500);
       });
   };

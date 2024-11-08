@@ -1,4 +1,8 @@
-import type { MeetupRsvpAttendanceStatusEnum } from "../types/types";
+import type {
+  MeetupRsvpAttendanceStatusEnum,
+  MeetupRsvpModel,
+  TicketTypeEnum,
+} from "../types/types";
 
 // RSVP FORM STATE
 export type GuestItem = {
@@ -21,8 +25,7 @@ export type AttendFormState = {
   guests: GuestItem[];
 };
 
-
-type SubmitRsvpPayload = Pick<AttendFormState, 'guests' | 'meetupId'>;
+type SubmitRsvpPayload = Pick<AttendFormState, "guests" | "meetupId" | 'response'>;
 
 export type SubmitRsvpPayloadResponse = SubmitRsvpPayload & {
   /** The saved RSVP ID */
@@ -30,7 +33,7 @@ export type SubmitRsvpPayloadResponse = SubmitRsvpPayload & {
   /** Whether or not the rsvp was confirmed */
   responseCode: number;
   // @todo - do we need the meetup data again?
-}
+};
 export async function submitRsvp(
   payload: SubmitRsvpPayload
 ): Promise<SubmitRsvpPayloadResponse> {
@@ -39,43 +42,33 @@ export async function submitRsvp(
     return resolve({
       rsvpId: "XXX",
       meetupId: payload.meetupId,
+      response: payload.response,
       guests: payload.guests,
       responseCode: 200,
     });
-    // const suspectCorrect = guess.suspect?.id === realAnswer.suspect?.id;
-    // const weaponCorrect = guess.weapon?.id === realAnswer.weapon?.id;
-    // const roomCorrect = guess.room?.id === realAnswer.room?.id;
-
-    // if (suspectCorrect && weaponCorrect && roomCorrect) {
-    //   return resolve({
-    //     result: {
-    //       suspect: true,
-    //       weapon: true,
-    //       room: true,
-    //     },
-    //     message: "Congratulations, you have solved the mystery!",
-    //   }); // @todo - add a message from Mr Black here..."You were close etc..."
-    // }
-
-    // const all = [suspectCorrect, weaponCorrect, roomCorrect];
-    // const totalCorrect = all.filter((x) => x).length;
-    // let message = "";
     
-    // // @todo - this can be made harder by only revealing if 1 is correct, like in the boardgame...
-    // return reject({
-    //   result: {
-    //     suspect: suspectCorrect,
-    //     weapon: weaponCorrect,
-    //     room: roomCorrect,
-    //   },
-    //   message,
-    // });
   });
 }
 
-export function buildRsvpPayload(guests: GuestItem[], meetupId: string): SubmitRsvpPayload {
+export function buildRsvpPayload(
+  response: MeetupRsvpAttendanceStatusEnum,
+  guests: GuestItem[],
+  meetupId: string
+): SubmitRsvpPayload {
   return {
+    response,
     meetupId,
     guests,
   };
+}
+
+export function getGuestList(
+  guests: MeetupRsvpModel[],
+  guestType: MeetupRsvpAttendanceStatusEnum,
+  ticket?: TicketTypeEnum
+) {
+  // if (ticket) {
+  //   return guests.filter((guest) => guest.rsvpStatus === guestType && guest.ticketType === ticket);
+  // }
+  return guests.filter((guest) => guest.rsvpStatus === guestType);
 }

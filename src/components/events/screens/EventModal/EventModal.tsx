@@ -16,6 +16,7 @@ import EventLocation from "./parts/EventLocation";
 import EventHeading from "./parts/EventHeading";
 import EventRegistration from "./parts/EventRegistration";
 import { MeetupRsvpAttendanceStatusEnum } from '../../types/types';
+import EventGuests from './parts/EventGuests';
 
 type EventModalProps = {
   onClose: () => void;
@@ -151,6 +152,8 @@ export default function EventModal({ onClose }: EventModalProps) {
         <hr />
 
         <EventHosts event={event} group={group.value.data} />
+        <hr />
+        <EventGuests event={event} group={group.value.data} />
         <hr />
 
         {!eventPriceIsFree && (

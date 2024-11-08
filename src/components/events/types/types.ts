@@ -33,34 +33,35 @@ export const getAttendanceStatusHumanMessage = (
 
 
 // RSVP-ING
-type UserRsvpInfo = Pick<
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  any,
-  "nickname" | "email" | "telegram" | "firstname" | "lastname" | "mobile"
->;
+// type UserRsvpInfo = Pick<
+//   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+//   any,
+//   "nickname" | "email" | "telegram" | "firstname" | "lastname" | "mobile"
+// >;
 
 type MeetupRsvpResponseType = "YES" | "NO" | "MAYBE";
 
-type RsvpType = {
-  /** UUID of the RSVP response */
-  responseId: string;
-  /** User UUID who responded */
-  userId: string;
-  /** The response given by the user - if they are going or not! */
-  response: MeetupRsvpResponseType;
-  /** Timestamp of initial RSVP */
-  responseTimestamp: string;
-  /** Timestamp of updated RSVP when most recently changed */
-  responseTimestampUpdated: string;
-  /** Incremental number of times the user has edited their RSVP */
-  changedTimes: number;
-};
+// type RsvpType = {
+//   /** UUID of the RSVP response */
+//   responseId: string;
+//   /** User UUID who responded */
+//   userId: string;
+//   /** The response given by the user - if they are going or not! */
+//   response: MeetupRsvpResponseType;
+//   /** Timestamp of initial RSVP */
+//   responseTimestamp: string;
+//   /** Timestamp of updated RSVP when most recently changed */
+//   responseTimestampUpdated: string;
+//   /** Incremental number of times the user has edited their RSVP */
+//   changedTimes: number;
+// };
+
 /** Type for people responding to meetup events */
 export type MeetupRsvpResponse =
   /** Even though the user data can be looked up from the userID, this is what they share with the event in question */
-  | Partial<UserRsvpInfo>
+  // | Partial<UserRsvpInfo>
   /** Internal response mandatory data */
-  | RsvpType;
+  | MeetupRsvpModel;
 
 export type MeetupUserRole = "ADMIN" | "HOST" | "COHOST" | "USER";
 
@@ -68,16 +69,44 @@ export type MeetupUserRole = "ADMIN" | "HOST" | "COHOST" | "USER";
 export interface MeetupRsvpModel {
   /** The rsvp ID - needed for updating */
   rsvpId: string;
-  /** The attendee user ID, or empty string. If empty string, the response is considered anonymous */
-  attendeeUserId: string;
+  /** The user ID of this person, if they rsvp'd when they were signed in, or empty string. If empty string, the response is considered anonymous */
+  rsvpUserId: string;
   /** The response (coming, maybe, not) given by the attendee */
-  attendanceStatus: MeetupRsvpAttendanceStatusEnum;
+  rsvpStatus: MeetupRsvpAttendanceStatusEnum;
   /** This can be used if given as the name, instead of the user's name */
-  attendeeName: string;
+  rsvpName: string;
   /** Their personal message, comment or request */
-  attendeeAvatarColor: string;
+  rsvpAvatar: string;
   /** Their chosen avatar color in css format, eg. #ffee00 */
-  comment: string;
+  rsvpComment: string;
+  /** Timestamp of the initial RSVP */
+  rsvpTimestampInitial: number;
+  /** 
+   * The timestamp of the latest RSVP update.
+   * Will be different to initial timestamp if the user has amended their response
+   */
+  rsvpTimestampRecent: number;
+  /** The number of times the user has changed (patched) their rsvp */
+  rsvpChangedTimes: number;
+  /** The rsvp ticket type created. If the event is full, the user will be automatically on the waiting list */
+  rsvpTicketType: TicketTypeEnum;
+}
+
+/** Note: Needs to support Bitwise, so binary values
+ * More types: https://www.eventbrite.com/blog/types-event-tickets-ds00/
+ */
+export enum TicketTypeEnum {
+  WaitingList = 1,
+  PreSale = 2,
+  SuperEarlyBird = 4,
+  EarlyBird = 8,
+  Standard = 16, // general admission
+  VIP = 32,
+  SingleDayPass = 64,
+  MultiDayPass = 128,
+  GroupPass = 256,
+  MemberOnlyTickets = 512,
+  EntranceOnly = 1024,
 }
 
 export enum MeetupStatusEnum {

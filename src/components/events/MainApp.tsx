@@ -1,6 +1,6 @@
 import { useEffect } from "preact/hooks";
-import type { MeetupItem } from "../../types/types";
 import GroupHeader from "./components/GroupHeader/GroupHeader";
+import type { MeetupItem } from './types/types';
 import useAppStateContext from "./contexts/AppStateProvider";
 import EventsList from "./screens/EventsList/EventsList";
 import {

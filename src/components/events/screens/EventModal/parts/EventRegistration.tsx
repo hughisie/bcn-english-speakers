@@ -5,7 +5,7 @@ import {
   getEventAttendeesCriteria,
   getPaymentSchemeReadout,
 } from "../../../../../services/events.service";
-import type { MeetupItem } from "../../../../../types/types";
+import type { MeetupItem } from "../../../types/types";
 import { PriceFormatter } from "../../../utils/priceFormatter";
 
 type EventRegistrationProps = {

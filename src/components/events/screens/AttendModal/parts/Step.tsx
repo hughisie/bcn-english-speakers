@@ -19,7 +19,7 @@ export default function Step({
   return (
     <div class="border-b border-gray-900/10 pb-6 my-6">
       {stepTitle && (
-        <h2 class="text-xl/7 font-semibold text-gray-900">{stepTitle}</h2>
+        <h2 class="text-xl/7 font-semibold text-gray-900">{stepIndex + 1}. {stepTitle}</h2>
       )}
       {stepDescription && (
         <p class="mt-1 mb-4 text-sm/6 text-gray-600">{stepDescription}</p>

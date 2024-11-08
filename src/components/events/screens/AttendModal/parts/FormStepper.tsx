@@ -67,7 +67,7 @@ export default function FormStepper() {
     <div>
       <Step
         currentStep={0}
-        stepIndex={-1}
+        stepIndex={0}
         stepTitle="Attendance"
         stepDescription="Please let us know if you can make it."
         fieldsetTitle="Are you coming?"
@@ -105,14 +105,15 @@ export default function FormStepper() {
         currentStep={currentStep}
       >
         <div class="space-y-6">
-          <h2 class="text-base">Guest 1 - Main</h2>
+          <h2 class="text-base">Guest 1 (Main)</h2>
           <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            {/* First name */}
             <div class="sm:col-span-3">
               <label
                 for="firstname"
                 class="block text-sm/6 font-medium text-gray-900"
               >
-                First name
+                Name
               </label>
               <div class="mt-2">
                 <input
@@ -129,6 +130,7 @@ export default function FormStepper() {
               </div>
             </div>
 
+            {/* Lastname */}
             <div class="sm:col-span-3">
               <label
                 for="lastname"
@@ -149,6 +151,7 @@ export default function FormStepper() {
               </div>
             </div>
 
+            {/* Mobile */}
             <div class="sm:col-span-3">
               <label
                 for="mobile"
@@ -169,6 +172,7 @@ export default function FormStepper() {
               </div>
             </div>
 
+            {/* Avatar */}
             <div class="sm:col-span-3">
               <label
                 for="avatar"
@@ -184,6 +188,7 @@ export default function FormStepper() {
                   value={formData.guests[0]?.avatar}
                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm/6"
                 >
+                  <option value="">- choose -</option>
                   {avatarsList.map((emoji, key) => {
                     return (
                       <option key={emoji} value={emoji}>
@@ -194,23 +199,76 @@ export default function FormStepper() {
                 </select>
               </div>
             </div>
+
+            <div class="col-span-full">
+              <label
+                for="about"
+                class="block text-sm/6 font-medium text-gray-900"
+              >
+                Comment (optional)
+              </label>
+              <div class="mt-2">
+                <textarea
+                  id="about"
+                  name="about"
+                  rows={3}
+                  maxLength={512}
+                  class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                />
+              </div>
+              <p class="mt-1 text-sm/6 text-gray-400 font-light">
+                Leave a comment for the organiser
+              </p>
+            </div>
           </div>
         </div>
       </Step>
 
       <div>
         {formData.guests.length > 0 && (
-          <div class="flex flex-col gap-2">
-            <h2>Guests:</h2>
+          <div class="flex flex-col gap-2 mb-4">
+            <h2 class="text-sm">Guests ({formData.guests.length})</h2>
 
             {formData.guests.map((rsvp, index) => {
               return (
+                // <div class="flex flex-row gap-1" key={index}>
+                //   <div>{rsvp.avatar}</div>
+                //   <div>Name: {rsvp.name}</div>
+                //   <div>Surname: {rsvp.lastname || '-'}</div>
+                //   <div>Mobile: {rsvp.mobile || '-'}</div>
+                // </div>
                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                <div class="flex flex-row gap-1" key={index}>
-                  <div>{rsvp.avatar}</div>
-                  <div>Name: {rsvp.name}</div>
-                  <div>Surname: {rsvp.lastname || '-'}</div>
-                  <div>Mobile: {rsvp.mobile || '-'}</div>
+                <div class="col-span-full" key={index}>
+                  <div class="mt-1 flex items-center gap-x-3">
+                    {rsvp.avatar ? (
+                      <span class="h-12 w-12 text-5xl rounded-full text-center overflow-hidden">
+                        {rsvp.avatar}
+                      </span>
+                    ) : (
+                      <svg
+                        class="h-12 w-12 text-gray-300"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                        data-slot="icon"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                    )}
+                    <span>
+                      {rsvp.name} {rsvp.lastname}
+                    </span>
+                    {/* <button
+                      type="button"
+                      class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    >
+                      Change
+                    </button> */}
+                  </div>
                 </div>
               );
             })}
