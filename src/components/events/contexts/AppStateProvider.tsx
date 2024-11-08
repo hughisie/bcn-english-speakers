@@ -73,7 +73,7 @@ function createAppState(appState: AppState) {
     // extra: make sure last name, email, mobile are provided if meetup config asks for it
     // make sure no bad words: https://www.npmjs.com/package/bad-words
     const allNamesFilled = attendModalState.value.formData.guests.every(
-      (i) => !!i.name
+      (i) => !!i.name && !!i.avatar
     );
     return allNamesFilled && attendModalState.value.formData.guests.length > 0;
   });
