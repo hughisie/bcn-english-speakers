@@ -14,7 +14,6 @@ export enum MeetupRsvpAttendanceStatusEnum {
   Coming = 1,
   Maybe = 2,
   Cannot = 3,
-  // Other = 4,
 }
 export const getAttendanceStatusHumanMessage = (
   status: MeetupRsvpAttendanceStatusEnum
@@ -30,38 +29,6 @@ export const getAttendanceStatusHumanMessage = (
       return "";
   }
 };
-
-
-// RSVP-ING
-// type UserRsvpInfo = Pick<
-//   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-//   any,
-//   "nickname" | "email" | "telegram" | "firstname" | "lastname" | "mobile"
-// >;
-
-type MeetupRsvpResponseType = "YES" | "NO" | "MAYBE";
-
-// type RsvpType = {
-//   /** UUID of the RSVP response */
-//   responseId: string;
-//   /** User UUID who responded */
-//   userId: string;
-//   /** The response given by the user - if they are going or not! */
-//   response: MeetupRsvpResponseType;
-//   /** Timestamp of initial RSVP */
-//   responseTimestamp: string;
-//   /** Timestamp of updated RSVP when most recently changed */
-//   responseTimestampUpdated: string;
-//   /** Incremental number of times the user has edited their RSVP */
-//   changedTimes: number;
-// };
-
-/** Type for people responding to meetup events */
-export type MeetupRsvpResponse =
-  /** Even though the user data can be looked up from the userID, this is what they share with the event in question */
-  // | Partial<UserRsvpInfo>
-  /** Internal response mandatory data */
-  | MeetupRsvpModel;
 
 export type MeetupUserRole = "ADMIN" | "HOST" | "COHOST" | "USER";
 
