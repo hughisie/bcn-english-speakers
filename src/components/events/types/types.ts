@@ -36,28 +36,28 @@ export type MeetupUserRole = "ADMIN" | "HOST" | "COHOST" | "USER";
 export interface MeetupRsvpModel {
   /** The rsvp ID - needed for updating */
   rsvpId: string;
-  /** The user ID of this person, if they rsvp'd when they were signed in, or empty string. If empty string, the response is considered anonymous */
-  rsvpUserId: string;
+  /** The attendee user ID, or empty string. If empty string, the response is considered anonymous */
+  userId: string;
   /** The response (coming, maybe, not) given by the attendee */
-  rsvpStatus: MeetupRsvpAttendanceStatusEnum;
-  /** This can be used if given as the name, instead of the user's name */
-  rsvpName: string;
-  /** Their personal message, comment or request */
-  rsvpAvatar: string;
-  /** Their chosen avatar color in css format, eg. #ffee00 */
-  rsvpComment: string;
-  /** Timestamp of the initial RSVP */
+  response: MeetupRsvpAttendanceStatusEnum;
+  /** The timestamp of the initial RSVP - for ordering signups */
   rsvpTimestampInitial: number;
-  /** 
-   * The timestamp of the latest RSVP update.
-   * Will be different to initial timestamp if the user has amended their response
-   */
-  rsvpTimestampRecent: number;
-  /** The number of times the user has changed (patched) their rsvp */
-  rsvpChangedTimes: number;
-  /** The rsvp ticket type created. If the event is full, the user will be automatically on the waiting list */
-  rsvpTicketType: TicketTypeEnum;
+  /** Timestamp of when the RSVP was updated - the most recent change */
+  rsvpTimestampUpdated: number;
+  /** Incremental number of times the user has edited their RSVP */
+  changedTimes: number;
+  /** This can be used if given as the name, instead of the user's name */
+  name: string;
+  /** Last name, if provided in payload, not from the user */
+  lastname: string;
+  /** Their chosen avatar */
+  avatar: string;
+  /** Guest mobile number - if provided */
+  mobile: string;
+  /** Personal message from the guest, if provided */
+  comment: string;
 }
+
 
 /** Note: Needs to support Bitwise, so binary values
  * More types: https://www.eventbrite.com/blog/types-event-tickets-ds00/
@@ -76,18 +76,34 @@ export enum TicketTypeEnum {
   EntranceOnly = 1024,
 }
 
+/**
+ * Status flow:
+ * 
+ * Draft -> Archived/Deleted (never went live)
+ * Draft -> Provisional -> Published
+ * @todo. Draft -> Published -> Ended (system will either set ended or infer the status)
+ * Draft -> Published -> Cancelled
+ * Draft -> Published -> Cancelled -> SoftDeleted
+ */
 export enum MeetupStatusEnum {
-  /** Events in draft state are not public */
-  Draft = "DRAFT",
-  /** An normal, published event. Users can rsvp */
-  Published = "PUBLISHED",
-  /** Archived events - support for when we need it. Archived events can be un-deleted */
-  Archived = "ARCHIVED",
+  /** Meetup is in draft state. Not public or visible yet */
+  Draft = 'DRAFT',
+  /** Meetup is accepting RSVPs but not fully confirmed yet. */
+  Provisional = 'PROVISIONAL',
+  /** Meetup is confirmed and published. People can rsvp */
+  Published = 'PUBLISHED',
+  /** @todo. Explicitly set to ended. */
+  Ended = 'ENDED',
+  /** Meetup has been either provisional or published, but is now cancelled. */
+  Cancelled = 'CANCELLED',
+  /** Support for when we need it. Archived events can be un-deleted */
+  Archived = 'ARCHIVED',
   /** Soft deleted events do not appear in any normal API data feed. They only exist in the database. */
-  SoftDeleted = "SOFTDELETED",
+  SoftDeleted = 'SOFTDELETED',
   /** @todo - Admin hard delete? */
-  Deleted = "DELETED",
+  Deleted = 'DELETED',
 }
+
 export type MeetupConfig = {
   /** 0=any number, 1=min one attendee required for the event to start */
   minAttendees: number;
@@ -102,6 +118,7 @@ export type MeetupConfig = {
   eventLanguage?: string[];
   /** Allow meetup organisers to customise the RSVP join button when users join the event */
   rsvpButtonCtaType?: RsvpButtonCtaTypes;
+  enableWaitingList?: boolean;
 };
 // export const RsvpButtonCtas = {
 //   JOIN: 'Join',

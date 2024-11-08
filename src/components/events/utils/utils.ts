@@ -1,4 +1,12 @@
-import { type GenericMediaItem, type MeetupItem, RsvpButtonCtaDefault, MeetupRsvpAttendanceStatusEnum, type MeetupRsvpCertainty, type MeetupRsvpModel, type TicketTypeEnum } from '../types/types';
+import {
+  type GenericMediaItem,
+  type MeetupItem,
+  RsvpButtonCtaDefault,
+  MeetupRsvpAttendanceStatusEnum,
+  type MeetupRsvpCertainty,
+  type MeetupRsvpModel,
+  type TicketTypeEnum,
+} from "../types/types";
 
 export const DEFAULT_LOCALE = "es-ES";
 
@@ -197,7 +205,7 @@ export const eventRSVPStatus = ({
 
   // filter out No's!
   const confirmedRSVPs = rsvps.filter(
-    (r) => r.rsvpStatus !== MeetupRsvpAttendanceStatusEnum.Cannot
+    (r) => r.response !== MeetupRsvpAttendanceStatusEnum.Cannot
   );
 
   // make sure there's space for 1 more
@@ -300,7 +308,6 @@ export const getRsvpEmojiList = (): string[] => {
   ];
 };
 
-
 export function getGuestList(
   guests: MeetupRsvpModel[],
   guestType: MeetupRsvpAttendanceStatusEnum,
@@ -309,10 +316,8 @@ export function getGuestList(
   // if (ticket) {
   //   return guests.filter((guest) => guest.rsvpStatus === guestType && guest.ticketType === ticket);
   // }
-  return guests.filter((guest) => guest.rsvpStatus === guestType);
+  return guests.filter((guest) => guest.response === guestType);
 }
-
-
 
 /** Return a event date string like: date: Tuesday, October 22, time: 2:00 PM - 5:00 PM */
 export const getEventDateReadout = (
@@ -350,13 +355,12 @@ export const getEventDateReadout = (
 };
 
 export const getMeetupMapLink = (event: MeetupItem) => {
-  const {location} = event;
+  const { location } = event;
   if (location.mapsLink) {
     return location.mapsLink;
   }
   if (!location.lat || !location.lng) {
-    return '';
+    return "";
   }
   return `https://www.google.com/maps/search/?api=1&query=${location.lat},${location.lng}`;
-  
 };
